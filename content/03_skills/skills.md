@@ -48,6 +48,7 @@
 | REST API | 설계 및 클라이언트 구현 |
 | Vercel | 포트폴리오 웹사이트 배포 |
 | Cloudflare Pages | 회사 소개 웹사이트 배포·운영 |
+| Google Play Store | Android 앱 배포 (MyCONECT) |
 | EmailJS | 문의 폼 연동 |
 
 ## 자동화 / 스크립트
