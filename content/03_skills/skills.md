@@ -15,6 +15,10 @@
 | View Binding / Data Binding | UI 레이어 연결 |
 | Android Custom View | InOutCountBar 커스텀 뷰 설계·구현 |
 | JitPack | 라이브러리 오픈소스 배포 |
+| Firebase Analytics | 앱 사용자 행동 분석 |
+| FCM (Firebase Cloud Messaging) | 푸시 알림 연동 |
+| Google Ads | 앱 광고 연동 |
+| Google Analytics | 트래픽·전환 분석 |
 
 ## 임베디드 / 하드웨어 연동
 
@@ -32,6 +36,9 @@
 | 기술 | 비고 |
 |------|------|
 | HTML / CSS / JavaScript | 정적 사이트 (회사 소개 웹사이트) |
+| jQuery | DOM 조작·이벤트 처리 |
+| Ajax | 비동기 HTTP 통신 |
+| JSP | 서버사이드 뷰 |
 | Next.js 14 (App Router) | 포트폴리오 웹사이트 |
 | TypeScript | Next.js 프로젝트 전체 적용 |
 | Tailwind CSS | 스타일링 |
@@ -45,11 +52,28 @@
 | 기술 | 비고 |
 |------|------|
 | Node.js | SmartThings OAuth 토큰 관리 백엔드 (초기 설계·구현) |
+| Spring Framework | MVC 기반 웹 애플리케이션 |
+| MyBatis | SQL 매퍼 ORM |
+| Apache Tomcat | WAS 구성 및 운영 |
 | REST API | 설계 및 클라이언트 구현 |
+| Amazon EC2 | 클라우드 서버 운영 |
+| GCP Storage (S3) | 오브젝트 스토리지 연동 |
+| NCP (Naver Cloud Platform) | IoT 관제 서버 아키텍처 설계 (VPC·Kafka·MySQL·Redis) |
+| Kafka | 비동기 메시지 큐, IoT 데이터 수집 버퍼링 설계 |
+| Redis | 캐시 레이어 설계 (Cache-Aside 패턴) |
+| Docker | 컨테이너 기반 배포 환경 구성 |
 | Vercel | 포트폴리오 웹사이트 배포 |
 | Cloudflare Pages | 회사 소개 웹사이트 배포·운영 |
 | Google Play Store | Android 앱 배포 (MyCONECT) |
 | EmailJS | 문의 폼 연동 |
+
+## 데이터베이스
+
+| 기술 | 비고 |
+|------|------|
+| MySQL | 관계형 DB |
+| SQLite | 경량 로컬 DB |
+| Room | Android 로컬 DB (SQLite 추상화) |
 
 ## 자동화 / 스크립트
 
