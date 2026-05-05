@@ -153,7 +153,7 @@ const projects: Project[] = [
     period: '2026.04',
     org: '유타렉스',
     highlights: [
-      'Daily Reporter: 출퇴근 메모 앱 (동료 실사용 중)',
+      'Daily Reporter: 일일 업무 일지 앱 (동료 실사용)',
       '제품 데이터 수집률 집계 자동화 (openpyxl)',
       'PyInstaller 단일 exe 배포, 시작프로그램 등록 지원',
     ],
