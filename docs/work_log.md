@@ -161,3 +161,53 @@
 - 숙련도 레벨 항목 삭제 (생략하기로 결정)
 - 프로필 사진 `content/01_about/profile.jpg` 추가 (임시)
 - 커밋: `feat: 착수 전 준비 완료 — 프로필 사진 추가, 체크리스트 현행화`
+
+---
+
+### 2026-04-23 — Next.js 초기 셋업
+
+- Next.js 15 + TypeScript + Tailwind CSS 프로젝트 생성
+- Geist 폰트 적용, `lang="ko"` 설정, 기본 globals.css 구성
+- 커밋: `feat: Next.js 15 + TypeScript + Tailwind CSS 초기 셋업`
+
+---
+
+### 2026-05-05 — MVP 전 섹션 구현 및 배포 준비
+
+**기본 구조 구현**
+- Nav (고정, 반응형 햄버거 메뉴), Hero, About (프로필 이미지 포함), Skills, Experience 섹션 구현
+- 커밋: `feat: Next.js 포트폴리오 기본 구조 구현`
+
+**Projects·Skills·Contact 섹션 구현 및 Nav 개선**
+- Projects: 7개 프로젝트 카드 2열 그리드, ProjectGallery 모달 (이미지/영상 분리 버튼)
+- Skills: 자격증 이미지 인라인 표시 및 클릭 확대 (CertImage 컴포넌트)
+- Contact: 이메일·GitHub·LinkedIn·블로그 링크 카드 4종
+- Nav: 스크롤 감지 제거 → 항상 반투명 고정 배경 (`bg-zinc-950/80 backdrop-blur-md`)
+- Favicon: 기본 favicon.ico 제거, YKJ SVG 아이콘(`icon.svg`) 교체
+- `content/` 스크린샷 → `public/projects/` 이동 (Next.js Image 서빙 경로 정리)
+- 커밋: `feat: Projects·Skills·Contact 섹션 구현 및 Nav 개선`
+
+**설정 정리**
+- `.claude/settings.local.json` git 추적 제거 (`git rm --cached`)
+- 커밋: `chore: settings.local.json git 추적 제거`
+
+**SEO 메타데이터 개선 및 콘텐츠 현행화**
+- `layout.tsx`: description 현행화, `metadataBase`·`openGraph`·`twitter`·`robots` 추가
+- `public/robots.txt` 생성, `src/app/sitemap.ts` 생성 (Next.js 내장 sitemap API)
+- About 자기소개 문구 개편 ("불편함을 발견하면 직접 만드는 개발자" 스토리 중심)
+- Skills 자격증 아이콘 📜 변경, Projects·Skills 기여도 항목 제거
+- 커밋: `feat: SEO 메타데이터 개선 및 콘텐츠 현행화`
+
+**보안 헤더 추가**
+- `next.config.ts`에 `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection` 헤더 설정
+- 커밋: `chore: 보안 헤더 추가`
+
+---
+
+## 다음 할 일
+
+### Week 4: Should Have 구현 ①
+
+- [ ] 프로젝트 상세 페이지 (S2) — 카드 클릭 시 별도 페이지 라우팅
+- [ ] 이력서 PDF 다운로드 버튼 (S7) — Hero 또는 Contact 섹션에 추가
+- [ ] Experience 타임라인 UI 개선 (S1) — 현재 기본 리스트, 타임라인 형태로 개선 검토
