@@ -69,7 +69,7 @@ function CertImage({ src, alt, label }: { src: string; alt: string; label: strin
             className="object-cover w-full"
           />
         </button>
-        <span className="text-sm text-zinc-400">🏅 {label}</span>
+        <span className="text-sm text-zinc-400">📜 {label}</span>
       </div>
 
       {isOpen && (
@@ -94,7 +94,7 @@ function CertImage({ src, alt, label }: { src: string; alt: string; label: strin
                 className="object-contain w-full"
               />
             </div>
-            <p className="text-center text-zinc-400 text-sm mt-3">🏅 {label}</p>
+            <p className="text-center text-zinc-400 text-sm mt-3">📜 {label}</p>
           </div>
         </div>
       )}

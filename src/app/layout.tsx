@@ -12,10 +12,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const description =
+  "Android·AOSP·임베디드부터 웹 개발·배포·운영까지, 제품 전 과정을 직접 만드는 개발자 양기정의 포트폴리오입니다.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kjyang.kro.kr"),
   title: "양기정 | Product Engineer",
-  description:
-    "기획·설계부터 배포·운영까지, 제품 전 사이클을 직접 이끄는 프로덕트 엔지니어",
+  description,
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    url: "https://kjyang.kro.kr",
+    title: "양기정 | Product Engineer",
+    description,
+    images: [{ url: "/profile.jpg", width: 192, height: 192, alt: "양기정 프로필" }],
+    locale: "ko_KR",
+    siteName: "양기정 포트폴리오",
+  },
+  twitter: {
+    card: "summary",
+    title: "양기정 | Product Engineer",
+    description,
+    images: ["/profile.jpg"],
+  },
 };
 
 export default function RootLayout({

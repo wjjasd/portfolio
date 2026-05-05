@@ -28,19 +28,13 @@ export default function About() {
 
           <div className="space-y-6">
             <p className="text-zinc-300 text-lg leading-relaxed">
-              비전공자로, 2017년 서빙 아르바이트 중 메모장과 볼펜이 불편해서
-              직접 주문 앱을 만든 것이 시작이었습니다.
+              불편함을 발견하면 직접 만드는 개발자입니다.
             </p>
             <p className="text-zinc-300 text-lg leading-relaxed">
-              &ldquo;필요하면 직접 만든다&rdquo;는 그 태도가 지금까지 이어져,
-              AOSP 커스터마이징·Android 앱·웹 프론트엔드·배포·운영까지
-              제품의 전 사이클을 경험해왔습니다.
+              2017년 서빙 업무 중 주문 기록 앱을 만든 것을 시작으로 Android, AOSP, 임베디드, 웹, 배포와 운영까지 다양한 제품 개발의 전 과정을 경험해왔습니다.
             </p>
             <p className="text-zinc-300 text-lg leading-relaxed">
-              새로운 기술에 대한 거부감이 낮고, 항상 사용자와 제품을 기준으로
-              판단하기 때문에 필요한 기술이라면 빠르게 학습하고 적용합니다.
-              지금은 단순 구현을 넘어, 설계와 프로젝트 관리 역량을 더해 팀과
-              제품 모두에 기여하는 방향으로 성장하고 있습니다.
+              사용자와 제품을 기준으로 판단하며, 단순 구현을 넘어 문제의 원인을 분석하고 지속 가능한 방식으로 해결하는 데 집중하고 있습니다.
             </p>
 
             <div className="flex flex-wrap gap-3 pt-2">
