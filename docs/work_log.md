@@ -172,6 +172,30 @@
 
 ---
 
+### 2026-05-12 ~ 2026-05-13 — Framer Motion 애니메이션 전면 적용 및 문의 폼 추가
+
+**Framer Motion 설치 및 전 섹션 애니메이션 적용**
+- `framer-motion` 패키지 설치
+- `FadeIn` 공통 컴포넌트 신규 제작 (`src/components/FadeIn.tsx`) — `whileInView` 기반 scroll-triggered fadeIn 래퍼
+- Hero: 페이지 로드 시 label → 이름 → 소개글 → 버튼 순 stagger 등장 애니메이션
+- Nav: 스크롤 24px 이상 시 shadow + border 강화 효과 (scroll listener 기반)
+- About: 프로필/소개 블록 FadeIn 적용, 프로필 사진 hover 효과(border 하이라이트·brightness) 및 lightbox 기능 추가
+- Projects: 카드 scroll-triggered 순차 등장 + hover 시 6px lift + shadow 효과, `'use client'` 전환
+- Skills: 섹션 카드 stagger 등장 + 각 태그 scale/fade 순차 등장 (`Variants` 타입 적용)
+- Experience: 기존 IntersectionObserver 제거 → Framer Motion `whileInView` 전환
+- Contact: 카드 FadeIn 순차 등장 + hover lift 효과
+- 커밋: `feat: Framer Motion 애니메이션 적용 및 문의 폼 추가 (Web3Forms)`
+
+**Contact 문의 폼 추가 (Web3Forms)**
+- Contact 섹션 하단에 이름 / 이메일 / 메시지 폼 추가
+- `Web3Forms` 연동 (`https://api.web3forms.com/submit`)
+- API 키 `.env.local` 환경변수로 관리 (`NEXT_PUBLIC_WEB3FORMS_KEY`)
+- 전송 성공/실패 피드백 메시지 표시 후 4초 자동 소멸
+- Vercel 프로덕션 환경변수 등록 완료
+- 커밋: `feat: Framer Motion 애니메이션 적용 및 문의 폼 추가 (Web3Forms)`
+
+---
+
 ### 2026-05-05 — MVP 전 섹션 구현 및 배포 준비
 
 **기본 구조 구현**
