@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import FadeIn from './FadeIn'
 
 const experiences = [
   {
@@ -33,47 +34,29 @@ const experiences = [
 ]
 
 export default function Experience() {
-  const refs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove('opacity-0', 'translate-y-4')
-            entry.target.classList.add('opacity-100', 'translate-y-0')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
-
-    refs.current.forEach((el) => el && observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section id="experience" className="px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full py-24">
-        <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
-          Experience
-        </p>
-        <h2 className="text-4xl font-bold text-white mb-16">경력</h2>
+        <FadeIn>
+          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
+            Experience
+          </p>
+          <h2 className="text-4xl font-bold text-white mb-16">경력</h2>
+        </FadeIn>
 
         <div className="relative">
-          {/* 세로 타임라인 선 */}
           <div className="absolute left-3.5 top-2 bottom-4 w-px bg-white/10" />
 
           <div className="space-y-12">
             {experiences.map((exp, i) => (
-              <div
+              <motion.div
                 key={exp.company}
-                ref={(el) => { refs.current[i] = el }}
-                className="relative pl-12 opacity-0 translate-y-4 transition-all duration-700 ease-out"
-                style={{ transitionDelay: `${i * 150}ms` }}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                className="relative pl-12"
               >
-                {/* 점 마커 */}
                 <div
                   className={`absolute left-0 top-1 w-7 h-7 rounded-full bg-zinc-900 border-2 flex items-center justify-center ${
                     exp.current
@@ -88,7 +71,6 @@ export default function Experience() {
                   />
                 </div>
 
-                {/* 기간 + 재직 배지 */}
                 <div className="flex items-center gap-3 mb-1">
                   <p className="text-zinc-500 text-sm font-mono">{exp.period}</p>
                   {exp.current && (
@@ -98,11 +80,9 @@ export default function Experience() {
                   )}
                 </div>
 
-                {/* 회사명 + 역할 */}
                 <h3 className="text-xl font-semibold text-white mb-1">{exp.company}</h3>
                 <p className="text-zinc-400 text-sm mb-4">{exp.role}</p>
 
-                {/* 업무 목록 */}
                 <ul className="space-y-2">
                   {exp.tasks.map((task, j) => (
                     <li key={j} className="flex gap-3 text-zinc-400 text-sm leading-relaxed">
@@ -111,7 +91,7 @@ export default function Experience() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

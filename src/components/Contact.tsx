@@ -1,3 +1,9 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import FadeIn from './FadeIn'
+
 interface ContactItem {
   label: string
   display: string
@@ -24,7 +30,7 @@ function GitHubIcon() {
 function LinkedInIcon() {
   return (
     <svg className="w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 23.2 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
     </svg>
   )
 }
@@ -64,13 +70,29 @@ const contacts: ContactItem[] = [
   },
 ]
 
-function ContactCard({ item }: { item: ContactItem }) {
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  }),
+}
+
+function ContactCard({ item, index }: { item: ContactItem; index: number }) {
   const isEmail = item.href.startsWith('mailto:')
   return (
-    <a
+    <motion.a
       href={item.href}
       target={isEmail ? undefined : '_blank'}
       rel={isEmail ? undefined : 'noopener noreferrer'}
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      whileHover={{ y: -4 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.2 }}
       className="group relative bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-600 hover:bg-zinc-800/50 transition-colors flex flex-col"
     >
       {item.icon}
@@ -79,7 +101,132 @@ function ContactCard({ item }: { item: ContactItem }) {
       <span className="absolute top-4 right-4 text-zinc-600 group-hover:text-indigo-400 transition-colors text-lg leading-none">
         ↗
       </span>
-    </a>
+    </motion.a>
+  )
+}
+
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
+
+function ContactForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [status, setStatus] = useState<FormStatus>('idle')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('submitting')
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          name,
+          email,
+          message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setStatus('success')
+        setName('')
+        setEmail('')
+        setMessage('')
+        setTimeout(() => setStatus('idle'), 4000)
+      } else {
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 4000)
+      }
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 4000)
+    }
+  }
+
+  return (
+    <FadeIn delay={0.1}>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col gap-5"
+      >
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div className="flex flex-col gap-2">
+            <label className="text-sm text-zinc-400 font-medium" htmlFor="cf-name">
+              이름
+            </label>
+            <input
+              id="cf-name"
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="홍길동"
+              className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 transition-colors"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-sm text-zinc-400 font-medium" htmlFor="cf-email">
+              이메일
+            </label>
+            <input
+              id="cf-email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="example@email.com"
+              className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 transition-colors"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm text-zinc-400 font-medium" htmlFor="cf-message">
+            메시지
+          </label>
+          <textarea
+            id="cf-message"
+            required
+            rows={5}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="안녕하세요, 궁금한 점이 있어서 연락드립니다..."
+            className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button
+            type="submit"
+            disabled={status === 'submitting'}
+            className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-full transition-colors"
+          >
+            {status === 'submitting' ? '전송 중...' : '메시지 보내기'}
+          </button>
+
+          {status === 'success' && (
+            <motion.p
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-sm text-emerald-400"
+            >
+              메시지가 전송되었습니다.
+            </motion.p>
+          )}
+          {status === 'error' && (
+            <motion.p
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-sm text-red-400"
+            >
+              전송에 실패했습니다. 다시 시도해주세요.
+            </motion.p>
+          )}
+        </div>
+      </form>
+    </FadeIn>
   )
 }
 
@@ -87,15 +234,19 @@ export default function Contact() {
   return (
     <section id="contact" className="px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full py-24">
-        <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">Contact</p>
-        <h2 className="text-4xl font-bold text-white mb-4">연락하기</h2>
-        <p className="text-zinc-400 text-lg mb-12">궁금한 점이 있으시면 편하게 연락주세요.</p>
+        <FadeIn>
+          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">Contact</p>
+          <h2 className="text-4xl font-bold text-white mb-4">연락하기</h2>
+          <p className="text-zinc-400 text-lg mb-12">궁금한 점이 있으시면 편하게 연락주세요.</p>
+        </FadeIn>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {contacts.map((item) => (
-            <ContactCard key={item.label} item={item} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          {contacts.map((item, i) => (
+            <ContactCard key={item.label} item={item} index={i} />
           ))}
         </div>
+
+        <ContactForm />
       </div>
     </section>
   )

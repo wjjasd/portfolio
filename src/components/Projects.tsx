@@ -1,5 +1,9 @@
+'use client'
+
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import ProjectGallery from './ProjectGallery'
+import FadeIn from './FadeIn'
 
 interface GalleryItem {
   type: 'image' | 'video'
@@ -114,9 +118,9 @@ const projects: Project[] = [
     org: '개인 프로젝트',
     highlights: [
       'SSR/SSG 혼용 SEO 최적화·반응형 레이아웃 구현',
-      'Framer Motion 애니메이션·Tistory RSS 연동 예정',
+      'Framer Motion 애니메이션 적용',
     ],
-    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vercel'],
     thumbnail: null,
     gallery: [],
     links: [
@@ -190,12 +194,29 @@ const projects: Project[] = [
   },
 ]
 
-function ProjectCard({ project }: { project: Project }) {
+const cardVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  }),
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const imageItems = project.gallery.filter((g) => g.type === 'image')
   const videoItems = project.gallery.filter((g) => g.type === 'video')
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors flex flex-col">
+    <motion.div
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
+      viewport={{ once: true, amount: 0.1 }}
+      className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-600 hover:shadow-xl hover:shadow-black/30 transition-colors flex flex-col"
+    >
       {project.thumbnail ? (
         <div className="relative w-full aspect-video bg-zinc-800">
           <Image
@@ -264,7 +285,7 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -272,14 +293,16 @@ export default function Projects() {
   return (
     <section id="projects" className="px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full py-24">
-        <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
-          Projects
-        </p>
-        <h2 className="text-4xl font-bold text-white mb-16">프로젝트</h2>
+        <FadeIn>
+          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
+            Projects
+          </p>
+          <h2 className="text-4xl font-bold text-white mb-16">프로젝트</h2>
+        </FadeIn>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {projects.map((project, i) => (
+            <ProjectCard key={project.id} project={project} index={i} />
           ))}
         </div>
       </div>
