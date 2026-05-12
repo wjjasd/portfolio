@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { motion, type Variants } from 'framer-motion'
+import FadeIn from './FadeIn'
 
 const skillGroups = [
   {
@@ -43,6 +45,16 @@ const skillGroups = [
     skills: ['Python', 'Git', 'Confluence', 'Slack'],
   },
 ]
+
+const tagContainerVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.04 } },
+}
+
+const tagVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.85, y: 8 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+}
 
 function CertImage({ src, alt, label }: { src: string; alt: string; label: string }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -106,28 +118,43 @@ export default function Skills() {
   return (
     <section id="skills" className="px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full py-24">
-        <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
-          Skills
-        </p>
-        <h2 className="text-4xl font-bold text-white mb-16">기술 스택</h2>
+        <FadeIn>
+          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
+            Skills
+          </p>
+          <h2 className="text-4xl font-bold text-white mb-16">기술 스택</h2>
+        </FadeIn>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillGroups.map((group) => (
-            <div key={group.label}>
+          {skillGroups.map((group, gi) => (
+            <motion.div
+              key={group.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: gi * 0.07, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+            >
               <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">
                 {group.label}
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <motion.div
+                className="flex flex-wrap gap-2"
+                variants={tagContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+              >
                 {group.skills.map((skill) => (
-                  <span
+                  <motion.span
                     key={skill}
+                    variants={tagVariants}
                     className="px-3 py-1.5 text-sm bg-zinc-800/80 text-zinc-300 rounded-lg border border-zinc-700/50 hover:border-indigo-500/50 hover:text-white transition-colors"
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
 
