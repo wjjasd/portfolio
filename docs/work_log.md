@@ -227,3 +227,21 @@
 - 커밋: `chore: 보안 헤더 추가`
 
 ---
+
+### 2026-05-15 — Google Search Console 등록 및 SEO 강화
+
+**Google Search Console 등록**
+- 도메인 속성 `kjyang.kro.kr` 추가
+- 내도메인.한국 DNS 설정에 TXT 레코드 추가로 소유권 인증 완료
+  - 기존 Vercel 연결용 `_vercel` TXT 레코드와 함께 공존
+
+**SEO 강화 (5단계)**
+- `keywords` 추가 — 양기정, kjyang, 개발자, Product Engineer, Android, AOSP 등
+- `title` 키워드 강화 — `"양기정 (kjyang) | Product Engineer · 개발자 포트폴리오"` + `template` 설정 (하위 페이지 자동 적용)
+- OG 이미지 동적 생성 — `src/app/opengraph-image.tsx` 생성 (1200×630, Next.js ImageResponse)
+  - twitter card도 `summary` → `summary_large_image` 업그레이드
+- JSON-LD 구조화 데이터 — `src/components/JsonLd.tsx` 생성, `layout.tsx`에 삽입
+  - schema.org `Person` 타입, GitHub(`wjjasd`) 링크 포함
+- `canonical` URL 설정 — `alternates.canonical: "https://kjyang.kro.kr"`
+
+---

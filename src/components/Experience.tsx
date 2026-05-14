@@ -20,7 +20,7 @@ const experiences = [
     ],
   },
   {
-    company: '홀리츠 (Holits)',
+    company: '홀리츠 (Holich)',
     role: 'Android 개발',
     period: '2021.01 ~ 2023.04',
     current: false,

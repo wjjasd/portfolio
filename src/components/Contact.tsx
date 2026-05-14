@@ -116,7 +116,6 @@ function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('submitting')
-
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',

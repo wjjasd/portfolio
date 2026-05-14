@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,23 +18,41 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kjyang.kro.kr"),
-  title: "양기정 | Product Engineer",
+  title: {
+    default: "양기정 (kjyang) | Product Engineer · 개발자 포트폴리오",
+    template: "%s | 양기정 (kjyang)",
+  },
   description,
+  keywords: [
+    "양기정",
+    "kjyang",
+    "개발자",
+    "포트폴리오",
+    "Product Engineer",
+    "Android 개발자",
+    "AOSP",
+    "임베디드 개발자",
+    "웹 개발자",
+    "풀스택 개발자",
+  ],
+  alternates: {
+    canonical: "https://kjyang.kro.kr",
+  },
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     url: "https://kjyang.kro.kr",
-    title: "양기정 | Product Engineer",
+    title: "양기정 (kjyang) | Product Engineer · 개발자 포트폴리오",
     description,
-    images: [{ url: "/profile.jpg", width: 192, height: 192, alt: "양기정 프로필" }],
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "양기정 (kjyang) | Product Engineer" }],
     locale: "ko_KR",
     siteName: "양기정 포트폴리오",
   },
   twitter: {
-    card: "summary",
-    title: "양기정 | Product Engineer",
+    card: "summary_large_image",
+    title: "양기정 (kjyang) | Product Engineer · 개발자 포트폴리오",
     description,
-    images: ["/profile.jpg"],
+    images: ["/opengraph-image.png"],
   },
 };
 
@@ -48,6 +67,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100">
+        <JsonLd />
         {children}
       </body>
     </html>
