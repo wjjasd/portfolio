@@ -10,7 +10,7 @@ const skillGroups = [
     label: 'Android / 모바일',
     skills: [
       'Kotlin', 'Java', 'Android Native', 'AOSP 커스터마이징',
-      'MVVM', 'RxKotlin', 'Retrofit2', 'BLE', 'Room',
+      'MVVM', 'RxKotlin', 'Retrofit2', 'BLE',
       'Firebase Analytics', 'FCM', 'JitPack',
     ],
   },
@@ -24,25 +24,28 @@ const skillGroups = [
   {
     label: '웹 프론트엔드',
     skills: [
-      'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion',
-      'HTML / CSS / JS', 'jQuery', 'JSP', 'RSS 파싱',
+      'React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion',
+      'HTML / CSS / JS', 'jQuery', 'JSP', 'Web3Forms',
     ],
   },
   {
     label: '백엔드 / 인프라',
     skills: [
-      'Node.js', 'Spring Framework', 'MyBatis', 'REST API',
-      'Docker', 'Amazon EC2', 'NCP', 'Kafka', 'Redis',
-      'Vercel', 'Cloudflare Pages',
+      'Node.js', 'Spring Framework', 'MyBatis', 'Apache Tomcat', 'REST API',
+      'Docker', 'Amazon EC2', 'GCP Storage', 'NCP', 'Kafka', 'Redis', 'Vercel',
+      'MySQL', 'SQLite', 'Room',
     ],
   },
   {
-    label: '데이터베이스',
-    skills: ['MySQL', 'SQLite', 'Room'],
+    label: '분석 / SEO',
+    skills: [
+      'Google Analytics 4', 'Google Search Console',
+      'Open Graph', 'JSON-LD / Schema.org',
+    ],
   },
   {
     label: '자동화 / 협업',
-    skills: ['Python', 'Git', 'Confluence', 'Slack'],
+    skills: ['Python', 'tkinter', 'winreg', 'Git', 'Confluence', 'Slack'],
   },
 ]
 
