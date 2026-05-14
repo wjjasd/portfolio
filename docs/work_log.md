@@ -244,4 +244,11 @@
   - schema.org `Person` 타입, GitHub(`wjjasd`) 링크 포함
 - `canonical` URL 설정 — `alternates.canonical: "https://kjyang.kro.kr"`
 
+**Google Analytics 4 연동**
+- GA4 속성 생성 (업종: 인터넷 및 통신, 목표: 웹 트래픽 파악 + 사용자 참여 및 유지율)
+- `@next/third-parties` 패키지 설치
+- `NEXT_PUBLIC_GA_ID` 환경변수로 측정 ID 관리 (`.env.local` + Vercel 환경변수 등록)
+- `layout.tsx`에 `<GoogleAnalytics>` 컴포넌트 삽입
+- 커밋: `feat: Google Analytics 4 연동`
+
 ---

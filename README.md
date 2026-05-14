@@ -16,6 +16,7 @@
 | 스타일링 | Tailwind CSS v4 |
 | 애니메이션 | Framer Motion |
 | 문의 폼 | Web3Forms |
+| 분석 | Google Analytics 4 |
 | 배포 | Vercel |
 
 ---
