@@ -251,4 +251,19 @@
 - `layout.tsx`에 `<GoogleAnalytics>` 컴포넌트 삽입
 - 커밋: `feat: Google Analytics 4 연동`
 
+**About·Skills 섹션 콘텐츠 개선**
+- About: 자기소개 문구 4문단으로 개편 (아이디어→제품, 경력 스토리, 철학, 현재 업무)
+  - 현재 업무: RK3588 기반 Android·Linux 게이트웨이, Modbus·BLE·Sub-G 센서 연동, 클라우드 관제 플랫폼 연계
+  - 스킬 태그: 개별 기술(Android, AOSP 등) → 스킬 섹션 대그룹 6개로 교체
+  - 이름/직함 하단에 `정보처리기사` 표기 추가
+- Skills: 그룹 구조 정리
+  - `분석 / SEO` 그룹 신설 (GA4, Search Console, Open Graph, JSON-LD)
+  - `데이터베이스` 그룹 제거 → `백엔드 / 인프라`에 통합
+  - 웹 프론트엔드: `React`, `Web3Forms` 추가 / `RSS 파싱` 제거
+  - 백엔드/인프라: `Apache Tomcat`, `GCP Storage` 추가 / `Cloudflare Pages` 제거
+  - 자동화/협업: `tkinter`, `winreg` 추가
+  - Android: `Room` 중복 제거
+- README: 기술 스택 표에 `Google Analytics 4` 항목 추가
+- 커밋: `feat: About·Skills 섹션 콘텐츠 개선`
+
 ---

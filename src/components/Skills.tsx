@@ -32,7 +32,7 @@ const skillGroups = [
     label: '백엔드 / 인프라',
     skills: [
       'Node.js', 'Spring Framework', 'MyBatis', 'Apache Tomcat', 'REST API',
-      'Docker', 'Amazon EC2', 'GCP Storage', 'NCP', 'Kafka', 'Redis', 'Vercel',
+      'Docker', 'Amazon EC2', 'GCP Storage', 'NCP', 'Kafka', 'Redis', 'Vercel', 'Cloudflare Pages',
       'MySQL', 'SQLite', 'Room',
     ],
   },
