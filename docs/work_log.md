@@ -267,3 +267,24 @@
 - 커밋: `feat: About·Skills 섹션 콘텐츠 개선`
 
 ---
+
+### 2026-05-19 — Blog 섹션 추가 (Tistory RSS 연동)
+
+**Blog 섹션 구현**
+- `src/components/Blog.tsx` 신규 생성 — Next.js 서버 컴포넌트(RSC), Tistory RSS(`dev-yangkj.tistory.com/rss`) fetch + XML 파싱
+  - ISR `revalidate: 3600` 적용 (1시간마다 갱신)
+  - 외부 패키지 추가 없이 자체 파싱 헬퍼 구현 (`extractTag`, `decodeHtmlEntities`, `extractFirstImageSrc`)
+  - fetch 실패 시 섹션 자체를 `null`로 반환하는 graceful fallback 처리
+- `src/components/BlogCards.tsx` 신규 생성 — Client Component, Framer Motion 카드 애니메이션
+  - 최신 글 3개 카드: 썸네일 + 제목 + 날짜
+  - 썸네일 없는 글은 인디고 그라디언트 fallback 표시
+  - "블로그 전체 보기 →" 외부 링크 버튼
+- `src/app/page.tsx`: `<Blog />` 추가 (Experience ~ Contact 사이)
+- `src/components/Nav.tsx`: navItems에 `Blog` 항목 추가
+- 커밋: `feat: Blog 섹션 추가 — Tistory RSS 연동`
+
+**버그 수정 2건**
+- RSS `<description>`이 CDATA가 아닌 HTML 엔티티 인코딩(`&lt;img&gt;`)으로 제공 → `decodeHtmlEntities` 함수 추가로 해결
+- 정규식 greedy 매칭 버그: `<img[^>]+src=` 에서 `[^>]+`이 greedy라 `onerror` 속성 내 fallback no-image URL을 잡는 문제 → `[^>]+?` (non-greedy)로 수정
+
+---
