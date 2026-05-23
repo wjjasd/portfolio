@@ -3,48 +3,32 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, type Variants } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import FadeIn from './FadeIn'
 
 const skillGroups = [
   {
-    label: 'Android / 모바일',
-    skills: [
-      'Kotlin', 'Java', 'Android Native', 'AOSP 커스터마이징',
-      'MVVM', 'RxKotlin', 'Retrofit2', 'BLE',
-      'Firebase Analytics', 'FCM', 'JitPack',
-    ],
+    label: 'Android / Mobile',
+    skills: ['Kotlin', 'Java', 'Android Native', 'AOSP Customization', 'MVVM', 'RxKotlin', 'Retrofit2', 'BLE', 'Firebase Analytics', 'FCM', 'JitPack'],
   },
   {
-    label: '임베디드 / 하드웨어',
-    skills: [
-      'Linux 드라이버 개발', 'SubG (Sub-GHz)', 'MQTT', 'MODBUS',
-      'BLE 프로토콜', 'PWM / GPIO',
-    ],
+    label: 'Embedded / Hardware',
+    skills: ['Linux Driver Dev', 'SubG (Sub-GHz)', 'MQTT', 'MODBUS', 'BLE Protocol', 'PWM / GPIO'],
   },
   {
-    label: '웹 프론트엔드',
-    skills: [
-      'React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion',
-      'HTML / CSS / JS', 'jQuery', 'JSP', 'Web3Forms',
-    ],
+    label: 'Web Frontend',
+    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'HTML / CSS / JS', 'jQuery', 'JSP', 'Web3Forms'],
   },
   {
-    label: '백엔드 / 인프라',
-    skills: [
-      'Node.js', 'Spring Framework', 'MyBatis', 'Apache Tomcat', 'REST API',
-      'Docker', 'Amazon EC2', 'GCP Storage', 'NCP', 'Kafka', 'Redis', 'Vercel', 'Cloudflare Pages',
-      'MySQL', 'SQLite', 'Room',
-    ],
+    label: 'Backend / Infra',
+    skills: ['Node.js', 'Spring Framework', 'MyBatis', 'Apache Tomcat', 'REST API', 'Docker', 'Amazon EC2', 'GCP Storage', 'NCP', 'Kafka', 'Redis', 'Vercel', 'Cloudflare Pages', 'MySQL', 'SQLite', 'Room'],
   },
   {
-    label: '분석 / SEO',
-    skills: [
-      'Google Analytics 4', 'Google Search Console',
-      'Open Graph', 'JSON-LD / Schema.org',
-    ],
+    label: 'Analytics / SEO',
+    skills: ['Google Analytics 4', 'Google Search Console', 'Open Graph', 'JSON-LD / Schema.org'],
   },
   {
-    label: '자동화 / 협업',
+    label: 'Automation / Collaboration',
     skills: ['Python', 'tkinter', 'winreg', 'Git', 'Confluence', 'Slack'],
   },
 ]
@@ -60,6 +44,7 @@ const tagVariants: Variants = {
 }
 
 function CertImage({ src, alt, label }: { src: string; alt: string; label: string }) {
+  const t = useTranslations('skills')
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -96,7 +81,7 @@ function CertImage({ src, alt, label }: { src: string; alt: string; label: strin
             <button
               onClick={() => setIsOpen(false)}
               className="absolute -top-10 right-0 text-zinc-400 hover:text-white transition-colors text-2xl leading-none"
-              aria-label="닫기"
+              aria-label={t('close')}
             >
               ✕
             </button>
@@ -118,14 +103,16 @@ function CertImage({ src, alt, label }: { src: string; alt: string; label: strin
 }
 
 export default function Skills() {
+  const t = useTranslations('skills')
+
   return (
     <section id="skills" className="px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full py-24">
         <FadeIn>
           <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
-            Skills
+            {t('section_label')}
           </p>
-          <h2 className="text-4xl font-bold text-white mb-16">기술 스택</h2>
+          <h2 className="text-4xl font-bold text-white mb-16">{t('title')}</h2>
         </FadeIn>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -162,9 +149,13 @@ export default function Skills() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/5">
-          <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">자격증</h3>
+          <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">{t('cert_title')}</h3>
           <div className="flex flex-wrap gap-6 items-start">
-            <CertImage src="/license.jpg" alt="정보처리기사 자격증" label="정보처리기사 (2019.11)" />
+            <CertImage
+              src="/license.jpg"
+              alt="Engineer Information Processing Certificate"
+              label="Engineer Information Processing (2019.11)"
+            />
           </div>
         </div>
       </div>

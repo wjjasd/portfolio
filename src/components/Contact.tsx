@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import FadeIn from './FadeIn'
 
 interface ContactItem {
-  label: string
+  labelKey: string
   display: string
+  displayKey?: string
   href: string
   icon: React.ReactNode
 }
@@ -43,31 +45,11 @@ function PenIcon() {
   )
 }
 
-const contacts: ContactItem[] = [
-  {
-    label: '이메일',
-    display: 'wjjasd@gmail.com',
-    href: 'mailto:wjjasd@gmail.com',
-    icon: <EnvelopeIcon />,
-  },
-  {
-    label: 'GitHub',
-    display: 'github.com/wjjasd',
-    href: 'https://github.com/wjjasd',
-    icon: <GitHubIcon />,
-  },
-  {
-    label: 'LinkedIn',
-    display: 'LinkedIn 프로필',
-    href: 'https://www.linkedin.com/in/기정-양-5919111ba',
-    icon: <LinkedInIcon />,
-  },
-  {
-    label: '블로그',
-    display: 'dev-yangkj.tistory.com',
-    href: 'https://dev-yangkj.tistory.com/',
-    icon: <PenIcon />,
-  },
+const contactItems: ContactItem[] = [
+  { labelKey: 'email_label', display: 'wjjasd@gmail.com', href: 'mailto:wjjasd@gmail.com', icon: <EnvelopeIcon /> },
+  { labelKey: 'github', display: 'github.com/wjjasd', href: 'https://github.com/wjjasd', icon: <GitHubIcon /> },
+  { labelKey: 'linkedin_label', displayKey: 'linkedin_display', display: '', href: 'https://www.linkedin.com/in/기정-양-5919111ba', icon: <LinkedInIcon /> },
+  { labelKey: 'blog_label', display: 'dev-yangkj.tistory.com', href: 'https://dev-yangkj.tistory.com/', icon: <PenIcon /> },
 ]
 
 const cardVariants = {
@@ -80,7 +62,11 @@ const cardVariants = {
 }
 
 function ContactCard({ item, index }: { item: ContactItem; index: number }) {
+  const t = useTranslations('contact')
   const isEmail = item.href.startsWith('mailto:')
+  const label = item.labelKey === 'github' ? 'GitHub' : t(item.labelKey as Parameters<typeof t>[0])
+  const display = item.displayKey ? t(item.displayKey as Parameters<typeof t>[0]) : item.display
+
   return (
     <motion.a
       href={item.href}
@@ -96,8 +82,8 @@ function ContactCard({ item, index }: { item: ContactItem; index: number }) {
       className="group relative bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-600 hover:bg-zinc-800/50 transition-colors flex flex-col"
     >
       {item.icon}
-      <p className="text-sm font-semibold text-white mt-4 mb-1">{item.label}</p>
-      <p className="text-sm text-zinc-400">{item.display}</p>
+      <p className="text-sm font-semibold text-white mt-4 mb-1">{label}</p>
+      <p className="text-sm text-zinc-400">{display}</p>
       <span className="absolute top-4 right-4 text-zinc-600 group-hover:text-indigo-400 transition-colors text-lg leading-none">
         ↗
       </span>
@@ -108,6 +94,7 @@ function ContactCard({ item, index }: { item: ContactItem; index: number }) {
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 function ContactForm() {
+  const t = useTranslations('contact')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
@@ -153,7 +140,7 @@ function ContactForm() {
         <div className="grid sm:grid-cols-2 gap-5">
           <div className="flex flex-col gap-2">
             <label className="text-sm text-zinc-400 font-medium" htmlFor="cf-name">
-              이름
+              {t('form_name')}
             </label>
             <input
               id="cf-name"
@@ -161,13 +148,13 @@ function ContactForm() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="홍길동"
+              placeholder={t('form_name_placeholder')}
               className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm text-zinc-400 font-medium" htmlFor="cf-email">
-              이메일
+              {t('form_email')}
             </label>
             <input
               id="cf-email"
@@ -183,7 +170,7 @@ function ContactForm() {
 
         <div className="flex flex-col gap-2">
           <label className="text-sm text-zinc-400 font-medium" htmlFor="cf-message">
-            메시지
+            {t('form_message')}
           </label>
           <textarea
             id="cf-message"
@@ -191,7 +178,7 @@ function ContactForm() {
             rows={5}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="안녕하세요, 궁금한 점이 있어서 연락드립니다..."
+            placeholder={t('form_message_placeholder')}
             className="bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
           />
         </div>
@@ -202,7 +189,7 @@ function ContactForm() {
             disabled={status === 'submitting'}
             className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-full transition-colors"
           >
-            {status === 'submitting' ? '전송 중...' : '메시지 보내기'}
+            {status === 'submitting' ? t('form_submitting') : t('form_submit')}
           </button>
 
           {status === 'success' && (
@@ -211,7 +198,7 @@ function ContactForm() {
               animate={{ opacity: 1, x: 0 }}
               className="text-sm text-emerald-400"
             >
-              메시지가 전송되었습니다.
+              {t('form_success')}
             </motion.p>
           )}
           {status === 'error' && (
@@ -220,7 +207,7 @@ function ContactForm() {
               animate={{ opacity: 1, x: 0 }}
               className="text-sm text-red-400"
             >
-              전송에 실패했습니다. 다시 시도해주세요.
+              {t('form_error')}
             </motion.p>
           )}
         </div>
@@ -230,18 +217,20 @@ function ContactForm() {
 }
 
 export default function Contact() {
+  const t = useTranslations('contact')
+
   return (
     <section id="contact" className="px-6 border-t border-white/5">
       <div className="max-w-6xl mx-auto w-full py-24">
         <FadeIn>
-          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">Contact</p>
-          <h2 className="text-4xl font-bold text-white mb-4">연락하기</h2>
-          <p className="text-zinc-400 text-lg mb-12">궁금한 점이 있으시면 편하게 연락주세요.</p>
+          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">{t('section_label')}</p>
+          <h2 className="text-4xl font-bold text-white mb-4">{t('title')}</h2>
+          <p className="text-zinc-400 text-lg mb-12">{t('subtitle')}</p>
         </FadeIn>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          {contacts.map((item, i) => (
-            <ContactCard key={item.label} item={item} index={i} />
+          {contactItems.map((item, i) => (
+            <ContactCard key={item.labelKey} item={item} index={i} />
           ))}
         </div>
 

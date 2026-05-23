@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "blog": "Blog",
+    "contact": "Contact",
+    "menu_open": "Menu"
+  },
+  "hero": {
+    "role": "Product Engineer",
+    "name": "KiJeong Yang",
+    "tagline": "From planning and design to deployment and operations,",
+    "tagline2": "a product engineer who drives the full product lifecycle.",
+    "cta_projects": "View Projects",
+    "cta_contact": "Contact Me"
+  },
+  "about": {
+    "section_label": "About",
+    "title": "About Me",
+    "name": "KiJeong Yang",
+    "role": "Product Engineer",
+    "cert": "Engineer Information Processing",
+    "profile_zoom": "View profile photo",
+    "close": "Close",
+    "profile_caption": "KiJeong Yang · Product Engineer",
+    "p1": "I turn ideas into real products.",
+    "p2": "Starting with a simple order-recording app I built while working as a server in 2017, I have worked across the full spectrum of product development — Android, AOSP, embedded systems, web, backend, deployment, and operations.",
+    "p3": "Beyond just implementing features, I focus on reliably solving real user problems in production environments.",
+    "p4": "Currently at an AIoT solutions company, I handle end-to-end IoT product development: RK3588-based Android/Linux gateway development, Modbus/BLE/Sub-G sensor integration, and cloud monitoring platform connectivity.",
+    "tags": ["Android / Mobile", "Embedded / Hardware", "Web Frontend", "Backend / Infra", "Analytics / SEO", "Automation / Collaboration"]
+  },
+  "projects": {
+    "section_label": "Projects",
+    "title": "Projects",
+    "live_demo": "The website you are viewing right now is the live demo.",
+    "image_button": "Images ({count})",
+    "demo_video": "Demo Video",
+    "thumbnail_alt": "thumbnail"
+  },
+  "skills": {
+    "section_label": "Skills",
+    "title": "Tech Stack",
+    "cert_title": "Certifications",
+    "close": "Close"
+  },
+  "experience": {
+    "section_label": "Experience",
+    "title": "Experience",
+    "current_badge": "Current"
+  },
+  "blog": {
+    "section_label": "Blog",
+    "title": "Blog",
+    "view_all": "View All Posts"
+  },
+  "contact": {
+    "section_label": "Contact",
+    "title": "Get in Touch",
+    "subtitle": "Feel free to reach out if you have any questions.",
+    "email_label": "Email",
+    "linkedin_label": "LinkedIn",
+    "linkedin_display": "LinkedIn Profile",
+    "blog_label": "Blog",
+    "form_name": "Name",
+    "form_name_placeholder": "John Doe",
+    "form_email": "Email",
+    "form_message": "Message",
+    "form_message_placeholder": "Hi, I have a question...",
+    "form_submit": "Send Message",
+    "form_submitting": "Sending...",
+    "form_success": "Your message has been sent.",
+    "form_error": "Failed to send. Please try again."
+  },
+  "gallery": {
+    "close": "Close",
+    "prev": "Previous",
+    "next": "Next",
+    "dot_label": "Image {index}"
+  }
+}

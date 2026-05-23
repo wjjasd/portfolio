@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 const container = {
   hidden: {},
@@ -15,6 +16,8 @@ const item = {
 }
 
 export default function Hero() {
+  const t = useTranslations('hero')
+
   return (
     <section className="min-h-screen flex items-center px-6 pt-16">
       <motion.div
@@ -27,28 +30,28 @@ export default function Hero() {
           variants={item}
           className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-6"
         >
-          Product Engineer
+          {t('role')}
         </motion.p>
         <motion.h1
           variants={item}
           className="text-7xl md:text-9xl font-bold text-white tracking-tight mb-8 leading-none"
         >
-          양기정
+          {t('name')}
         </motion.h1>
         <motion.p
           variants={item}
           className="text-xl md:text-2xl text-zinc-400 max-w-2xl leading-relaxed mb-12"
         >
-          기획·설계부터 배포·운영까지,
+          {t('tagline')}
           <br />
-          제품 전 사이클을 직접 이끄는 프로덕트 엔지니어
+          {t('tagline2')}
         </motion.p>
         <motion.div variants={item} className="flex flex-wrap gap-4">
           <a
             href="#projects"
             className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-medium transition-colors"
           >
-            프로젝트 보기
+            {t('cta_projects')}
           </a>
           <a
             href="https://github.com/wjjasd"
@@ -62,7 +65,7 @@ export default function Hero() {
             href="#contact"
             className="px-8 py-3 border border-white/20 hover:border-white/50 text-white rounded-full font-medium transition-colors"
           >
-            연락하기
+            {t('cta_contact')}
           </a>
         </motion.div>
       </motion.div>

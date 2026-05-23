@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "blog": "Blog",
+    "contact": "Contact",
+    "menu_open": "메뉴"
+  },
+  "hero": {
+    "role": "Product Engineer",
+    "name": "양기정",
+    "tagline": "기획·설계부터 배포·운영까지,",
+    "tagline2": "제품 전 사이클을 직접 이끄는 프로덕트 엔지니어",
+    "cta_projects": "프로젝트 보기",
+    "cta_contact": "연락하기"
+  },
+  "about": {
+    "section_label": "About",
+    "title": "자기소개",
+    "name": "양기정",
+    "role": "Product Engineer",
+    "cert": "정보처리기사",
+    "profile_zoom": "프로필 사진 크게 보기",
+    "close": "닫기",
+    "profile_caption": "양기정 · Product Engineer",
+    "p1": "아이디어를 실제 제품으로 바꾸는 일을 합니다.",
+    "p2": "2017년 서빙 업무 중 주문 기록 앱을 만든 것을 시작으로, Android, AOSP, 임베디드, 웹, 서버, 배포와 운영까지 제품 개발의 전 과정을 경험해왔습니다.",
+    "p3": "단순히 기능을 구현하는 것을 넘어, 사용자의 문제를 실제 환경에서 안정적으로 해결하는 데 집중합니다.",
+    "p4": "현재는 AIoT 솔루션 기업에서 RK3588 기반 Android·Linux 게이트웨이 개발부터 Modbus·BLE·Sub-G 센서 연동, 클라우드 관제 플랫폼 연계까지 IoT 제품 개발 전반을 담당하고 있습니다.",
+    "tags": ["Android / 모바일", "임베디드 / 하드웨어", "웹 프론트엔드", "백엔드 / 인프라", "분석 / SEO", "자동화 / 협업"]
+  },
+  "projects": {
+    "section_label": "Projects",
+    "title": "프로젝트",
+    "live_demo": "현재 보고 계시는 웹사이트가 라이브 데모입니다",
+    "image_button": "이미지 보기 ({count})",
+    "demo_video": "데모 영상",
+    "thumbnail_alt": "썸네일"
+  },
+  "skills": {
+    "section_label": "Skills",
+    "title": "기술 스택",
+    "cert_title": "자격증",
+    "close": "닫기"
+  },
+  "experience": {
+    "section_label": "Experience",
+    "title": "경력",
+    "current_badge": "재직 중"
+  },
+  "blog": {
+    "section_label": "Blog",
+    "title": "블로그",
+    "view_all": "블로그 전체 보기"
+  },
+  "contact": {
+    "section_label": "Contact",
+    "title": "연락하기",
+    "subtitle": "궁금한 점이 있으시면 편하게 연락주세요.",
+    "email_label": "이메일",
+    "linkedin_label": "LinkedIn",
+    "linkedin_display": "LinkedIn 프로필",
+    "blog_label": "블로그",
+    "form_name": "이름",
+    "form_name_placeholder": "홍길동",
+    "form_email": "이메일",
+    "form_message": "메시지",
+    "form_message_placeholder": "안녕하세요, 궁금한 점이 있어서 연락드립니다...",
+    "form_submit": "메시지 보내기",
+    "form_submitting": "전송 중...",
+    "form_success": "메시지가 전송되었습니다.",
+    "form_error": "전송에 실패했습니다. 다시 시도해주세요."
+  },
+  "gallery": {
+    "close": "닫기",
+    "prev": "이전",
+    "next": "다음",
+    "dot_label": "{index}번째 이미지"
+  }
+}

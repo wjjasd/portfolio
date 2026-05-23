@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface GalleryItem {
   type: 'image' | 'video'
@@ -16,6 +17,7 @@ interface ProjectGalleryProps {
 }
 
 export default function ProjectGallery({ items, projectName, buttonLabel }: ProjectGalleryProps) {
+  const t = useTranslations('gallery')
   const [isOpen, setIsOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -47,7 +49,7 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
         onClick={() => open(0)}
         className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
       >
-        {buttonLabel ?? `이미지 보기 (${items.length})`}
+        {buttonLabel ?? t('image_button', { count: items.length })}
       </button>
 
       {isOpen && (
@@ -62,7 +64,7 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
             <button
               onClick={close}
               className="absolute -top-10 right-0 text-zinc-400 hover:text-white transition-colors text-2xl leading-none"
-              aria-label="닫기"
+              aria-label={t('close')}
             >
               ✕
             </button>
@@ -93,14 +95,14 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
                   <button
                     onClick={prev}
                     className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
-                    aria-label="이전"
+                    aria-label={t('prev')}
                   >
                     ‹
                   </button>
                   <button
                     onClick={next}
                     className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
-                    aria-label="다음"
+                    aria-label={t('next')}
                   >
                     ›
                   </button>
@@ -119,7 +121,7 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
                       className={`w-1.5 h-1.5 rounded-full transition-colors ${
                         i === currentIndex ? 'bg-indigo-400' : 'bg-zinc-600 hover:bg-zinc-400'
                       }`}
-                      aria-label={`${i + 1}번째 이미지`}
+                      aria-label={t('dot_label', { index: i + 1 })}
                     />
                   ))}
                 </div>
