@@ -1,19 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations, useLocale } from 'next-intl'
 import FadeIn from './FadeIn'
 import type { BlogPost } from './Blog'
 
 export default function BlogCards({ posts }: { posts: BlogPost[] }) {
+  const t = useTranslations('blog')
+  const locale = useLocale()
+
   if (posts.length === 0) return null
 
   return (
     <>
       <FadeIn>
         <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
-          Blog
+          {t('section_label')}
         </p>
-        <h2 className="text-4xl font-bold text-white mb-16">블로그</h2>
+        <h2 className="text-4xl font-bold text-white mb-16">{t('title')}</h2>
       </FadeIn>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -47,7 +51,7 @@ export default function BlogCards({ posts }: { posts: BlogPost[] }) {
             <div className="flex flex-col flex-1 p-5 gap-2">
               <p className="text-zinc-500 text-xs font-mono">
                 {post.pubDate
-                  ? new Date(post.pubDate).toLocaleDateString('ko-KR', {
+                  ? new Date(post.pubDate).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -69,7 +73,7 @@ export default function BlogCards({ posts }: { posts: BlogPost[] }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 text-zinc-400 hover:text-white hover:border-indigo-500/40 text-sm transition-all duration-200"
         >
-          블로그 전체 보기
+          {t('view_all')}
           <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
