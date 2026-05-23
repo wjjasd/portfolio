@@ -1,9 +1,10 @@
 # 포트폴리오 웹사이트
 
-프로덕트 엔지니어 양기정의 포트폴리오 웹사이트 레포지토리입니다.
+프로덕트 엔지니어 양기정의 포트폴리오 웹사이트.
 
 - **URL**: https://kjyang.kro.kr
-- **배포**: Vercel
+- **상태**: 배포 중 (Should Have 진행 중)
+- **작업 기록·의사결정**: brain vault `10_projects/portfolio/` 참조
 
 ---
 
@@ -46,10 +47,7 @@ portfolio/
 │   ├── projects/                   # 프로젝트 스크린샷·GIF
 │   ├── robots.txt
 │   └── profile.jpg
-├── content/                        # 포트폴리오 콘텐츠 원본 (md + 미디어)
-└── docs/                           # 기획·계획·작업 문서
-    ├── plan/                       # 개발 일정 계획, 기획서
-    └── work_log.md                 # 작업 일지
+└── content/                        # 포트폴리오 콘텐츠 원본 (md + 미디어)
 ```
 
 ---
@@ -62,9 +60,3 @@ npm run dev
 ```
 
 `http://localhost:3000` 에서 확인
-
----
-
-## 개발 계획
-
-`docs/plan/개발_일정_계획.md` 참고 (6주 스프린트)
