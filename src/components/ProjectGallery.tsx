@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
@@ -52,7 +53,7 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
         {buttonLabel ?? t('image_button', { count: items.length })}
       </button>
 
-      {isOpen && (
+      {isOpen && createPortal(
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center"
           onClick={close}
@@ -130,7 +131,8 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
 
             <p className="text-center text-zinc-500 text-xs mt-2">{projectName} — {currentIndex + 1} / {items.length}</p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )
