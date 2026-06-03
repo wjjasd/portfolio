@@ -49,7 +49,7 @@ export default function BlogCards({ posts }: { posts: BlogPost[] }) {
             </div>
 
             <div className="flex flex-col flex-1 p-5 gap-2">
-              <p className="text-zinc-500 text-xs font-mono">
+              <p className="text-zinc-500 text-xs font-mono" suppressHydrationWarning>
                 {post.pubDate
                   ? new Date(post.pubDate).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US', {
                       year: 'numeric',
