@@ -1,5 +1,7 @@
+import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
-import ContributionCalendar from './ContributionCalendar'
+
+const ContributionCalendar = dynamic(() => import('./ContributionCalendar'), { ssr: false })
 
 interface ContributionDay {
   contributionCount: number
