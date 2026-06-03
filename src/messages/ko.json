@@ -78,5 +78,12 @@
     "prev": "이전",
     "next": "다음",
     "dot_label": "{index}번째 이미지"
+  },
+  "github": {
+    "section_label": "GitHub",
+    "title": "GitHub 기여",
+    "subtitle": "지난 1년간의 커밋 활동",
+    "total": "{count}개 기여",
+    "tooltip": "{date}: {count}회"
   }
 }
