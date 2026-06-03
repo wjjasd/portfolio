@@ -25,6 +25,13 @@ export async function GET() {
     console.error('[github-contributions] GITHUB_TOKEN not set')
     return NextResponse.json({ error: 'token_missing' }, { status: 502 })
   }
+  // 토큰 검증용 임시 로그 (배포 확인 후 제거)
+  return NextResponse.json({
+    debug: true,
+    len: token.length,
+    prefix: token.substring(0, 6),
+    suffix: token.substring(token.length - 4),
+  })
 
   try {
     const res = await fetch('https://api.github.com/graphql', {
