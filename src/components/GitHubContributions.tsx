@@ -57,16 +57,25 @@ export default function GitHubContributions() {
             </span>
           </div>
           <p className="text-zinc-400 text-sm mb-8">{t('subtitle')}</p>
-          <div className="overflow-x-auto pb-2">
-            <div className="flex gap-[3px] min-w-max">
-              {data.weeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col gap-[3px]">
-                  {week.contributionDays.map((day) => (
-                    <DayCell key={day.date} day={day} />
-                  ))}
-                </div>
-              ))}
-            </div>
+          {/* 모바일: 최근 26주, gap 2px (310px ≤ 327px 가용폭) */}
+          <div className="flex gap-[2px] sm:hidden">
+            {data.weeks.slice(-26).map((week, wi) => (
+              <div key={wi} className="flex flex-col gap-[2px]">
+                {week.contributionDays.map((day) => (
+                  <DayCell key={day.date} day={day} />
+                ))}
+              </div>
+            ))}
+          </div>
+          {/* sm 이상: 전체 52주 */}
+          <div className="hidden sm:flex gap-[3px] overflow-x-auto pb-2">
+            {data.weeks.map((week, wi) => (
+              <div key={wi} className="flex flex-col gap-[3px]">
+                {week.contributionDays.map((day) => (
+                  <DayCell key={day.date} day={day} />
+                ))}
+              </div>
+            ))}
           </div>
         </FadeIn>
       </div>
