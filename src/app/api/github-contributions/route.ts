@@ -20,26 +20,39 @@ const query = `{
 export const revalidate = 86400
 
 export async function GET() {
+  const token = process.env.GITHUB_TOKEN
+  if (!token) {
+    console.error('[github-contributions] GITHUB_TOKEN not set')
+    return NextResponse.json({ error: 'token_missing' }, { status: 502 })
+  }
+
   try {
     const res = await fetch('https://api.github.com/graphql', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ query }),
       next: { revalidate: 86400 },
     })
-    if (!res.ok) {
-      const errBody = await res.text()
-      console.error('[github-contributions] GitHub API error', res.status, errBody)
-      return NextResponse.json({ error: res.status, body: errBody }, { status: 502 })
-    }
     const json = await res.json()
+
+    // GitHub GraphQL은 에러가 있어도 HTTP 200 반환 — errors 필드 체크 필수
+    if (json?.errors) {
+      console.error('[github-contributions] GraphQL errors', JSON.stringify(json.errors))
+      return NextResponse.json({ error: 'graphql_error', details: json.errors }, { status: 502 })
+    }
+
     const calendar = json?.data?.user?.contributionsCollection?.contributionCalendar
-    if (!calendar) return NextResponse.json(null, { status: 502 })
+    if (!calendar) {
+      console.error('[github-contributions] No calendar data', JSON.stringify(json))
+      return NextResponse.json({ error: 'no_data', raw: json }, { status: 502 })
+    }
+
     return NextResponse.json(calendar)
-  } catch {
-    return NextResponse.json(null, { status: 502 })
+  } catch (e) {
+    console.error('[github-contributions] fetch error', e)
+    return NextResponse.json({ error: 'fetch_failed', message: String(e) }, { status: 502 })
   }
 }
