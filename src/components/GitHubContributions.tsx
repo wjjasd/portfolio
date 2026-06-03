@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server'
 import ContributionCalendar from './ContributionCalendar'
 
 interface ContributionDay {
@@ -54,8 +55,19 @@ async function fetchContributions(): Promise<GitHubCalendarData | null> {
 }
 
 export default async function GitHubContributions() {
-  const data = await fetchContributions()
+  const [data, t] = await Promise.all([
+    fetchContributions(),
+    getTranslations('github'),
+  ])
   if (!data) return null
+
+  const labels = {
+    sectionLabel: t('section_label'),
+    title: t('title'),
+    total: t('total', { count: data.totalContributions }),
+    subtitle: t('subtitle'),
+    tooltipPrefix: '',
+  }
 
   return (
     <section id="github" className="px-6 border-t border-white/5">
@@ -63,6 +75,7 @@ export default async function GitHubContributions() {
         <ContributionCalendar
           totalContributions={data.totalContributions}
           weeks={data.weeks}
+          labels={labels}
         />
       </div>
     </section>
