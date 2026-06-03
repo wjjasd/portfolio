@@ -78,5 +78,12 @@
     "prev": "Previous",
     "next": "Next",
     "dot_label": "Image {index}"
+  },
+  "github": {
+    "section_label": "GitHub",
+    "title": "GitHub Contributions",
+    "subtitle": "Commit activity over the past year",
+    "total": "{count} contributions",
+    "tooltip": "{date}: {count} commits"
   }
 }
