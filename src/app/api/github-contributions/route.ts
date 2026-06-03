@@ -17,7 +17,7 @@ const query = `{
   }
 }`
 
-export const revalidate = 86400
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const token = process.env.GITHUB_TOKEN
