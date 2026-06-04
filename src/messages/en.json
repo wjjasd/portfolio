@@ -48,7 +48,10 @@
   "experience": {
     "section_label": "Experience",
     "title": "Experience",
-    "current_badge": "Current"
+    "current_badge": "Current",
+    "total_label": "Total",
+    "year": "yr",
+    "month": "mo"
   },
   "blog": {
     "section_label": "Blog",

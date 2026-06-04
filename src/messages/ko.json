@@ -48,7 +48,10 @@
   "experience": {
     "section_label": "Experience",
     "title": "경력",
-    "current_badge": "재직 중"
+    "current_badge": "재직 중",
+    "total_label": "총 경력",
+    "year": "년",
+    "month": "개월"
   },
   "blog": {
     "section_label": "Blog",

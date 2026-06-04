@@ -9,12 +9,19 @@ interface ExperienceI18n {
   tasks: string[]
 }
 
+interface YearMonth {
+  year: number
+  month: number
+}
+
 interface Experience {
   company: string
   ko: ExperienceI18n
   en: ExperienceI18n
   period: string
   current: boolean
+  start: YearMonth
+  end?: YearMonth
 }
 
 const experiences: Experience[] = [
@@ -46,6 +53,7 @@ const experiences: Experience[] = [
     },
     period: '2024.02 ~ 현재',
     current: true,
+    start: { year: 2024, month: 2 },
   },
   {
     company: '홀리츠 (Holich)',
@@ -69,13 +77,29 @@ const experiences: Experience[] = [
     },
     period: '2021.01 ~ 2023.04',
     current: false,
+    start: { year: 2021, month: 1 },
+    end: { year: 2023, month: 4 },
   },
 ]
+
+function calcTotalMonths(exps: Experience[]): number {
+  const now = new Date()
+  return exps.reduce((sum, exp) => {
+    const end = exp.current
+      ? { year: now.getFullYear(), month: now.getMonth() + 1 }
+      : exp.end!
+    return sum + (end.year - exp.start.year) * 12 + (end.month - exp.start.month)
+  }, 0)
+}
 
 export default function Experience() {
   const t = useTranslations('experience')
   const locale = useLocale()
   const lang = locale === 'ko' ? 'ko' : 'en'
+
+  const totalMonths = calcTotalMonths(experiences)
+  const totalYears = Math.floor(totalMonths / 12)
+  const remainingMonths = totalMonths % 12
 
   return (
     <section id="experience" className="px-6 border-t border-white/5">
@@ -84,7 +108,14 @@ export default function Experience() {
           <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
             {t('section_label')}
           </p>
-          <h2 className="text-4xl font-bold text-white mb-16">{t('title')}</h2>
+          <div className="flex items-baseline gap-4 mb-16">
+            <h2 className="text-4xl font-bold text-white">{t('title')}</h2>
+            <span className="px-2.5 py-1 text-xs bg-zinc-800 text-zinc-400 rounded-full border border-zinc-700">
+              {t('total_label')}{' '}
+              {totalYears > 0 && `${totalYears}${t('year')} `}
+              {remainingMonths > 0 && `${remainingMonths}${t('month')}`}
+            </span>
+          </div>
         </FadeIn>
 
         <div className="relative">
