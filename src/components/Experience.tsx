@@ -108,9 +108,10 @@ export default function Experience() {
           <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
             {t('section_label')}
           </p>
-          <div className="flex items-baseline gap-4 mb-16">
-            <h2 className="text-4xl font-bold text-white">{t('title')}</h2>
-            <span className="px-2.5 py-1 text-xs bg-zinc-800 text-zinc-400 rounded-full border border-zinc-700">
+          <h2 className="text-4xl font-bold text-white mb-4">{t('title')}</h2>
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-12 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
+            <span className="w-2 h-2 rounded-full bg-indigo-400 shrink-0" />
+            <span className="text-indigo-300 text-sm font-medium">
               {t('total_label')}{' '}
               {totalYears > 0 && `${totalYears}${t('year')} `}
               {remainingMonths > 0 && `${remainingMonths}${t('month')}`}
