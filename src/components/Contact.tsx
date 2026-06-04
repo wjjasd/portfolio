@@ -48,7 +48,7 @@ function PenIcon() {
 const contactItems: ContactItem[] = [
   { labelKey: 'email_label', display: 'wjjasd@gmail.com', href: 'mailto:wjjasd@gmail.com', icon: <EnvelopeIcon /> },
   { labelKey: 'github', display: 'github.com/wjjasd', href: 'https://github.com/wjjasd', icon: <GitHubIcon /> },
-  { labelKey: 'linkedin_label', displayKey: 'linkedin_display', display: '', href: 'https://www.linkedin.com/in/기정-양-5919111ba', icon: <LinkedInIcon /> },
+  { labelKey: 'linkedin_label', displayKey: 'linkedin_display', display: '', href: 'https://www.linkedin.com/in/kjyang1994', icon: <LinkedInIcon /> },
   { labelKey: 'blog_label', display: 'dev-yangkj.tistory.com', href: 'https://dev-yangkj.tistory.com/', icon: <PenIcon /> },
 ]
 
