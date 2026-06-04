@@ -154,7 +154,7 @@ export default function Skills() {
             <CertImage
               src="/license.jpg"
               alt="Engineer Information Processing Certificate"
-              label="Engineer Information Processing (2019.11)"
+              label={`${t('cert')} (2019.11)`}
             />
           </div>
         </div>
