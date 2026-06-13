@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter, usePathname } from '@/i18n/navigation'
 
 const navHrefs = [
   { key: 'about', href: '#about' },
@@ -29,11 +29,8 @@ export default function Nav() {
   }, [])
 
   function switchLocale() {
-    // localePrefix: 'as-needed' → 기본 locale(ko)은 prefix 없음
     const next = locale === 'ko' ? 'en' : 'ko'
-    const basePath = pathname.replace(/^\/(ko|en)(?=\/|$)/, '') || '/'
-    const newPath = next === 'ko' ? basePath : `/en${basePath === '/' ? '' : basePath}`
-    router.replace(newPath, { scroll: false })
+    router.replace(pathname, { scroll: false, locale: next })
   }
 
   return (
