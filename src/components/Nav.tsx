@@ -29,9 +29,10 @@ export default function Nav() {
   }, [])
 
   function switchLocale() {
+    // localePrefix: 'as-needed' → 기본 locale(ko)은 prefix 없음
     const next = locale === 'ko' ? 'en' : 'ko'
-    // /ko/... → /en/...
-    const newPath = pathname.replace(`/${locale}`, `/${next}`)
+    const basePath = pathname.replace(/^\/(ko|en)(?=\/|$)/, '') || '/'
+    const newPath = next === 'ko' ? basePath : `/en${basePath === '/' ? '' : basePath}`
     router.replace(newPath, { scroll: false })
   }
 
