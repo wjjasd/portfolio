@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -31,15 +31,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: { default: title, template: `%s | 양기정 (kjyang)` },
     description,
     alternates: {
-      canonical: `https://kjyang.kro.kr/${locale}`,
+      canonical: isKo ? `https://kjyang.kro.kr/` : `https://kjyang.kro.kr/${locale}`,
       languages: {
-        'ko': 'https://kjyang.kro.kr/ko',
+        'ko': 'https://kjyang.kro.kr/',
         'en': 'https://kjyang.kro.kr/en',
       },
     },
     openGraph: {
       type: "website",
-      url: `https://kjyang.kro.kr/${locale}`,
+      url: isKo ? `https://kjyang.kro.kr/` : `https://kjyang.kro.kr/${locale}`,
       title,
       description,
       images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "양기정 (kjyang) | Product Engineer" }],
@@ -69,7 +69,18 @@ export default async function RootLayout({
           {children}
         </NextIntlClientProvider>
       </body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!} />
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        strategy="lazyOnload"
+      />
+      <Script id="ga-init" strategy="lazyOnload">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+        `}
+      </Script>
     </html>
   );
 }

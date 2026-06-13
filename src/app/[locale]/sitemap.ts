@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://kjyang.kro.kr/ko',
+      url: 'https://kjyang.kro.kr/',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
