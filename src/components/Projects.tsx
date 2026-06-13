@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import ProjectGallery from './ProjectGallery'
 import FadeIn from './FadeIn'
+import TiltCard from './TiltCard'
 
 interface GalleryItem {
   type: 'image' | 'video'
@@ -284,11 +285,11 @@ const projects: Project[] = [
 ]
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: { duration: 0.8, delay: (i % 2) * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   }),
 }
 
@@ -305,14 +306,14 @@ function ProjectCard({ project, index, locale }: { project: Project; index: numb
   const videoItems = localizedGallery.filter((g) => g.type === 'video')
 
   return (
-    <motion.div
+    <TiltCard
       custom={index}
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
       whileHover={{ y: -6, transition: { duration: 0.2, ease: 'easeOut' } }}
-      viewport={{ once: true, amount: 0.1 }}
-      className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-600 hover:shadow-xl hover:shadow-black/30 transition-colors flex flex-col"
+      viewport={{ once: true, amount: 0.2 }}
+      className="group relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-600 hover:shadow-xl hover:shadow-black/30 transition-colors flex flex-col"
     >
       {project.thumbnail ? (
         <div className="relative w-full aspect-video bg-zinc-800">
@@ -386,7 +387,7 @@ function ProjectCard({ project, index, locale }: { project: Project; index: numb
           ))}
         </div>
       </div>
-    </motion.div>
+    </TiltCard>
   )
 }
 
