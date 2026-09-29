@@ -79,8 +79,10 @@
 
 | 기술 | 비고 |
 |------|------|
-| Python | 데이터 수집률 집계 자동화 |
+| Python | 데이터 수집률 집계 자동화, Utarex Brain MCP 서버 |
 | openpyxl | Excel 파일 파싱·생성 |
+| MCP (Model Context Protocol) | Utarex Brain 사내 AI 비서 MCP 서버 구현 |
+| Gitea REST API | Utarex Brain 지식베이스 연동 (base64/sha/409 충돌 처리) |
 
 ## 협업 / 도구
 
