@@ -38,6 +38,41 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 'utarex_brain',
+    ko: {
+      name: 'Utarex Brain — 사내 AI 비서 MCP 서버',
+      oneLiner: '사내 지식베이스를 Claude에 연동하는 MCP 서버 단독 설계·구현, 실사용 중',
+      org: '유타렉스',
+      highlights: [
+        '26개 tool 제공 — 프로젝트 현황·작업 로그·ADR·사내 컨벤션 조회/기록',
+        'PERSONA.md 단일 소스 라이브 로드로 재배포 없이 규칙 갱신',
+        'OWNERS.md 권한 매트릭스 + SHA-guarded 쓰기로 안전한 협업 보장',
+        '.mcpb 자립 번들로 Python 미설치 PC에도 원클릭 배포, 세션 166회·토큰 28.6M 누적',
+      ],
+    },
+    en: {
+      name: 'Utarex Brain — In-house AI Assistant MCP Server',
+      oneLiner: 'Solo-designed MCP server connecting the company knowledge base to Claude, in active use',
+      org: 'UTAREX',
+      highlights: [
+        '26 tools — project status, work logs, ADRs, and company conventions lookup/write',
+        'Single-source PERSONA.md live-loaded every session, no redeploy needed for rule changes',
+        'OWNERS.md permission matrix + SHA-guarded writes prevent silent overwrite conflicts',
+        'Packaged as a self-contained .mcpb bundle for one-click install without Python, 166 sessions / 28.6M tokens to date',
+      ],
+    },
+    period: '2026.07 ~ 2026.08',
+    techStack: ['Python', 'MCP (Model Context Protocol)', 'Gitea REST API', 'Claude Desktop', 'Claude Code'],
+    thumbnail: '/projects/utarex_brain/claude_demo.png',
+    gallery: [
+      { type: 'image', src: '/projects/utarex_brain/claude_demo.png', alt: { ko: 'Claude Code 실사용 데모', en: 'Claude Code Live Demo' } },
+      { type: 'image', src: '/projects/utarex_brain/gitea_repo.png', alt: { ko: 'Gitea MCP 서버 소스 레포', en: 'Gitea MCP Server Source Repo' } },
+      { type: 'image', src: '/projects/utarex_brain/persona_doc.png', alt: { ko: 'PERSONA.md 운영 매뉴얼 문서', en: 'PERSONA.md Operations Manual' } },
+      { type: 'image', src: '/projects/utarex_brain/usage_stats.png', alt: { ko: '사용량 통계 (세션·토큰)', en: 'Usage Stats (Sessions/Tokens)' } },
+    ],
+    links: [],
+  },
+  {
     id: 'gs25',
     ko: {
       name: 'IoT 통합 관제 시스템',
