@@ -29,7 +29,7 @@ const skillGroups = [
   },
   {
     label: 'Automation / Collaboration',
-    skills: ['Python', 'tkinter', 'winreg', 'Git', 'Confluence', 'Slack'],
+    skills: ['Python', 'MCP (Model Context Protocol)', 'Gitea REST API', 'tkinter', 'winreg', 'Git', 'Confluence', 'Slack'],
   },
 ]
 
