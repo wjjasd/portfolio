@@ -14,7 +14,7 @@ interface ProjectGalleryProps {
   labels: { prev: string; next: string }
 }
 
-// 모달 안 미디어 뷰어. 한 장씩만 렌더하고 전환은 CSS fade (framer 불필요)
+// 모달 안 미디어 뷰어. 한 장씩만 렌더하고 전환은 CSS fade
 export default function ProjectGallery({ items, labels }: ProjectGalleryProps) {
   const [index, setIndex] = useState(0)
   const current = items[index]

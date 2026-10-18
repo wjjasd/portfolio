@@ -42,7 +42,8 @@
 | Next.js 14 (App Router) | 포트폴리오 웹사이트 |
 | TypeScript | Next.js 프로젝트 전체 적용 |
 | Tailwind CSS | 스타일링 |
-| Framer Motion | 페이지 전환·스크롤 애니메이션 |
+| React Server Components | 포트폴리오 섹션 서버 렌더링, 클라이언트 JS 최소화 |
+| CSS 애니메이션 (keyframes · steps) | 포트폴리오 터미널 타이핑·스피너 연출 |
 | SSR / SSG | SEO 최적화 혼용 구현 |
 | 반응형 레이아웃 | 모바일 ~ 데스크톱 대응 |
 | RSS 파싱 | Tistory 블로그 최신 글 자동 연동 |

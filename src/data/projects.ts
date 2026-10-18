@@ -384,7 +384,8 @@ export const projects: Project[] = [
       ],
       stack: [
         ['프레임워크', 'Next.js (App Router) / TypeScript'],
-        ['스타일', 'Tailwind CSS'],
+        ['렌더링', 'React Server Components · SSG/ISR'],
+        ['스타일', 'Tailwind CSS · CSS 애니메이션 (keyframes/steps)'],
         ['배포', 'Vercel (Free)'],
       ],
     },
@@ -406,11 +407,12 @@ export const projects: Project[] = [
       ],
       stack: [
         ['Framework', 'Next.js (App Router) / TypeScript'],
-        ['Styling', 'Tailwind CSS'],
+        ['Rendering', 'React Server Components · SSG/ISR'],
+        ['Styling', 'Tailwind CSS · CSS animations (keyframes/steps)'],
         ['Deploy', 'Vercel (Free)'],
       ],
     },
-    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vercel'],
+    techStack: ['Next.js', 'TypeScript', 'React Server Components', 'Tailwind CSS', 'Vercel'],
     gallery: [],
     links: [
       { label: { ko: 'GitHub', en: 'GitHub' }, url: 'https://github.com/wjjasd/portfolio' },

@@ -796,6 +796,19 @@ html[data-term="play"] .prompt[data-typed="run"] .caret {
   .term-dialog[open] .tc-read .dot {
     animation: term-read 260ms steps(1, end);
   }
+  /* 본문 청크를 받는 동안 ⏺ 깜빡임 → 도착하면 위 term-read로 바뀌며 완료 표시 */
+  .term-dialog[open][data-state="pending"] .tc-read .dot {
+    color: var(--color-fg-muted);
+    animation: term-blink 800ms steps(1) infinite;
+  }
+  .term-dialog[data-state="fail"] .tc-read .dot {
+    color: var(--color-error);
+    animation: none;
+  }
+  .m-pending {
+    margin-top: 1.5rem;
+    color: var(--color-fg-muted);
+  }
 
   .viewer {
     border: 1px solid var(--color-line-strong);

@@ -32,7 +32,7 @@ export const skillGroups: SkillGroup[] = [
     dir: 'web/',
     skills: [
       { name: 'React' }, core('Next.js'), core('TypeScript'), { name: 'Tailwind CSS' },
-      { name: 'Framer Motion' }, { name: 'HTML / CSS / JS' }, { name: 'jQuery' }, { name: 'JSP' },
+      { name: 'React Server Components' }, { name: 'HTML / CSS / JS' }, { name: 'jQuery' }, { name: 'JSP' },
       { name: 'Web3Forms' },
     ],
   },

@@ -1,12 +1,10 @@
 import { getLocale, getTranslations } from 'next-intl/server'
 import TerminalSection from '@/components/terminal/TerminalSection'
 import ToolCallHeader from '@/components/terminal/ToolCallHeader'
-import Checklist from '@/components/terminal/Checklist'
 import DiffBlock from '@/components/terminal/DiffBlock'
 import Glyph, { type GlyphName } from '@/components/terminal/Glyph'
 import { CMD, TOOL } from '@/components/terminal/commands'
 import ProjectDialog from '@/components/ProjectDialog'
-import ProjectGallery from '@/components/ProjectGallery'
 import { projects, type Project, type ProjectStatus, type DiffMetric } from '@/data/projects'
 
 const STATUS: Record<ProjectStatus, { glyph: GlyphName; tone: string }> = {
@@ -36,99 +34,12 @@ function mediaSummary(p: Project) {
   return { images, videos }
 }
 
-function ModalHeading({ children }: { children: string }) {
-  return (
-    <h4>
-      <span className="h" aria-hidden="true">
-        ##{' '}
-      </span>
-      {children}
-    </h4>
-  )
-}
-
-function ProjectModalBody({ project, lang, t, srLabels }: { project: Project; lang: Lang; t: T; srLabels: SrLabels }) {
-  const data = project[lang]
-  const titleId = `p-${project.slug}-title`
-
-  return (
-    <div className="m-body">
-      <h3 id={titleId}>{data.name}</h3>
-      <p className="m-meta">{meta(project, lang, t)}</p>
-
-      <ModalHeading>{t('m_background')}</ModalHeading>
-      <p>{data.background}</p>
-
-      <ModalHeading>{t('m_roles')}</ModalHeading>
-      <Checklist items={data.roles} srLabels={srLabels.check} />
-
-      {data.diff && (
-        <>
-          <ModalHeading>{t('m_results')}</ModalHeading>
-          <DiffBlock
-            before={data.diff.map((x) => (
-              <>
-                {x.label} <b>{x.before}</b>
-              </>
-            ))}
-            after={data.diff.map((x) => (
-              <>
-                {x.label} <b>{x.after}</b>
-              </>
-            ))}
-            srLabels={srLabels.diff}
-          />
-        </>
-      )}
-
-      <ModalHeading>{t('m_stack')}</ModalHeading>
-      <dl className="kv">
-        {data.stack.map(([k, v]) => (
-          <div key={k} className="contents">
-            <dt>{k}</dt>
-            <dd>{v}</dd>
-          </div>
-        ))}
-      </dl>
-
-      {project.gallery.length > 0 && (
-        <>
-          <ModalHeading>{t('m_media')}</ModalHeading>
-          <ProjectGallery
-            items={project.gallery.map((g) => ({ type: g.type, src: g.src, alt: g.alt[lang] }))}
-            labels={{ prev: t('g_prev'), next: t('g_next') }}
-          />
-        </>
-      )}
-
-      {project.links.length > 0 && (
-        <>
-          <ModalHeading>{t('m_links')}</ModalHeading>
-          <dl className="kv">
-            {project.links.map((l) => (
-              <div key={l.url} className="contents">
-                <dt>{l.label[lang]}</dt>
-                <dd>
-                  <a className="link" href={l.url} target="_blank" rel="noopener noreferrer">
-                    {l.url.replace(/^https?:\/\//, '')} <span aria-hidden="true">↗</span>
-                  </a>
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </>
-      )}
-    </div>
-  )
-}
-
 function meta(project: Project, lang: Lang, t: T) {
   const data = project[lang]
   return [project.period, data.org, t('contribution', { n: project.contribution }), data.tag].filter(Boolean).join(' · ')
 }
 
 interface SrLabels {
-  check: { done: string; doing: string; todo: string }
   diff: { before: string; after: string }
 }
 
@@ -182,6 +93,7 @@ function ProjectCard({ project, lang, t, srLabels }: { project: Project; lang: L
       </ul>
       <div className="card-foot">
         <ProjectDialog
+          slug={project.slug}
           labelledBy={`p-${project.slug}-title`}
           triggerClassName="btn-open"
           trigger={
@@ -200,9 +112,13 @@ function ProjectCard({ project, lang, t, srLabels }: { project: Project; lang: L
               </form>
             </div>
           }
-        >
-          <ProjectModalBody project={project} lang={lang} t={t} srLabels={srLabels} />
-        </ProjectDialog>
+          title={
+            <>
+              <h3 id={`p-${project.slug}-title`}>{data.name}</h3>
+              <p className="m-meta">{meta(project, lang, t)}</p>
+            </>
+          }
+        />
         {project.links.length > 0
           ? project.links.map((link) => (
               <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">
@@ -220,7 +136,6 @@ export default async function Projects() {
   const tTerm = await getTranslations('terminal')
   const lang: Lang = (await getLocale()) === 'ko' ? 'ko' : 'en'
   const srLabels: SrLabels = {
-    check: { done: tTerm('status_done'), doing: tTerm('status_in_progress'), todo: tTerm('status_todo') },
     diff: { before: tTerm('diff_before'), after: tTerm('diff_after') },
   }
 

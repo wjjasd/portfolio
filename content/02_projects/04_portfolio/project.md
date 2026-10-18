@@ -23,7 +23,7 @@
 - Claude AI를 활용한 기획·설계·코드 작성
 - SSR/SSG 혼용으로 SEO 최적화 적용
 - 반응형 레이아웃 (모바일 ~ 데스크톱) 구현
-- Framer Motion 기반 페이지 전환·스크롤 애니메이션 구현
+- 터미널 컨셉 리디자인: 섹션을 React Server Components로 전환하고 타이핑·스피너 연출은 CSS 애니메이션(keyframes·steps)으로 구현, 상세 모달은 네이티브 `<dialog>` + 열 때 불러오기(dynamic import)
 - Tistory RSS 파싱으로 블로그 최신 글 자동 연동
 - Lighthouse 성능 90점 이상 달성 목표
 
@@ -33,7 +33,8 @@
 |------|------|
 | 프레임워크 | Next.js 14 (App Router) / TypeScript |
 | 스타일링 | Tailwind CSS |
-| 애니메이션 | Framer Motion |
+| 렌더링 | React Server Components · SSG/ISR |
+| 애니메이션 | CSS 애니메이션 (keyframes · steps) |
 | 배포 | Vercel (Free Tier) |
 | 문의 폼 | EmailJS |
 | 블로그 연동 | Tistory RSS 파싱 (dev-yangkj.tistory.com) |

@@ -63,7 +63,9 @@
     "m_media": "Media",
     "m_links": "Links",
     "g_prev": "Previous media",
-    "g_next": "Next media"
+    "g_next": "Next media",
+    "m_loading": "Loading…",
+    "m_error": "Could not load the details. Please refresh the page."
   },
   "skills": {
     "title": "Tech Stack",
