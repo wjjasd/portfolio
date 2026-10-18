@@ -1,20 +1,31 @@
 {
   "nav": {
-    "about": "About",
-    "projects": "Projects",
-    "skills": "Skills",
-    "experience": "Experience",
-    "blog": "Blog",
-    "contact": "Contact",
-    "menu_open": "메뉴"
+    "label": "섹션 이동",
+    "lang": "언어 선택",
+    "skip": "본문으로 건너뛰기"
   },
   "hero": {
     "role": "Product Engineer",
     "name": "양기정",
-    "tagline": "기획·설계부터 배포·운영까지,",
-    "tagline2": "제품 전 사이클을 직접 이끄는 프로덕트 엔지니어",
+    "tagline": "기획·설계부터 배포·운영까지, 제품 전 사이클을 직접 이끄는 프로덕트 엔지니어",
+    "facts": {
+      "now_k": "현재",
+      "now_v": "유타렉스(UTAREX) — IoT 제품 개발 전반",
+      "career_k": "경력",
+      "career_v": "<b>{years}년 {months}개월</b> · Android · AOSP · 임베디드 · 웹",
+      "proof_k": "실증",
+      "proof_v": "GS25 <b>60여 개 매장 · 150대</b> 납품",
+      "impact_k": "개선",
+      "impact_v": "데이터 누락률 <muted>4.0%</muted> → <ok>0%</ok>",
+      "ops_k": "운영",
+      "ops_v": "MCP 서버 <b>26 tools · 166 세션</b>"
+    },
+    "menu_label": "바로가기",
+    "menu_q": "무엇을 먼저 보시겠어요?",
     "cta_projects": "프로젝트 보기",
-    "cta_contact": "연락하기"
+    "cta_contact": "연락하기",
+    "menu_hint": "숫자키 1–3 또는 클릭",
+    "new_tab": "(새 탭)"
   },
   "about": {
     "section_label": "About",
@@ -89,5 +100,8 @@
     "subtitle": "지난 1년간의 커밋 활동",
     "total": "{count}개 기여",
     "tooltip": "{date}: {count}회"
+  },
+  "terminal": {
+    "welcome": "kjyang.kro.kr 에 오신 것을 환영합니다"
   }
 }

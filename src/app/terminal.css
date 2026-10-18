@@ -187,6 +187,88 @@
     color: var(--color-fg-dim);
   }
 
+  /* Hero — whoami 출력. 줄 하나가 Welcome 박스 tagline(LCP 앵커)보다 작아야 한다 (ADR ③-2) */
+  .prompt-hero {
+    font-size: 1.0625rem;
+  }
+  .facts {
+    position: relative;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+  }
+  .facts .row {
+    display: grid;
+    grid-template-columns: 4em 1fr;
+    column-gap: 1.5ch;
+    padding: 2px 0;
+  }
+  .facts .k {
+    color: var(--color-fg-dim);
+  }
+  .facts b {
+    color: var(--color-fg-strong);
+    font-weight: 700;
+  }
+
+  /* SelectMenu — 기본은 1번에 ❯, hover/focus한 항목으로 이동 */
+  .menu {
+    margin-top: 1.5rem;
+  }
+  .menu-q {
+    font-size: 0.9375rem;
+    color: var(--color-fg-muted);
+  }
+  .menu ol {
+    margin-top: 0.5rem;
+  }
+  .menu a {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 40px;
+    color: var(--color-fg);
+  }
+  .menu .ptr {
+    display: inline-flex;
+    width: 1em;
+    color: var(--color-accent);
+    visibility: hidden;
+  }
+  .menu .num {
+    color: var(--color-fg-dim);
+  }
+  .menu li:first-child .ptr {
+    visibility: visible;
+  }
+  .menu li:first-child a {
+    color: var(--color-accent);
+  }
+  .menu ol:is(:hover, :focus-within) .ptr {
+    visibility: hidden;
+  }
+  .menu ol:is(:hover, :focus-within) a {
+    color: var(--color-fg);
+  }
+  .menu ol a:is(:hover, :focus-visible) {
+    color: var(--color-accent);
+  }
+  .menu ol a:is(:hover, :focus-visible) .ptr {
+    visibility: visible;
+  }
+  .menu a:focus-visible {
+    outline-offset: 0;
+  }
+  .menu-hint {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  @media (hover: none), (pointer: coarse) {
+    .menu-hint {
+      display: none;
+    }
+  }
+
   /* DiffBlock */
   .diff {
     font-size: 0.875rem;
@@ -215,6 +297,10 @@ html[data-term="play"] .spin-intro {
   display: block;
   opacity: 0;
   animation: term-spin-window 1200ms steps(1, end) forwards;
+}
+/* shimmer는 background-clip:text라 매 프레임 main-thread paint. 창이 열린 600ms만 돌린다 */
+html[data-term="play"] .spin-intro .shimmer {
+  animation: term-shimmer 600ms linear 600ms 1;
 }
 html[data-term="play"] [data-reveal] {
   opacity: 0;
@@ -245,7 +331,7 @@ html[data-term="play"] .prompt[data-typed="run"] .caret {
 @keyframes term-spin-window {
   0% { opacity: 0; }
   50% { opacity: 1; }
-  100% { opacity: 0; }
+  100% { opacity: 0; visibility: hidden; }
 }
 @keyframes term-reveal {
   from { opacity: 0; transform: translateY(3px); }

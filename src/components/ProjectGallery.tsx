@@ -57,6 +57,8 @@ export default function ProjectGallery({ items, projectName, buttonLabel }: Proj
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center"
           onClick={close}
+          role="dialog"
+          aria-modal="true"
         >
           <div
             className="relative max-w-4xl w-full mx-4"

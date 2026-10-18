@@ -36,6 +36,8 @@ function ProfileImage() {
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center"
           onClick={() => setIsOpen(false)}
+          role="dialog"
+          aria-modal="true"
         >
           <div className="relative max-w-sm w-full mx-4" onClick={(e) => e.stopPropagation()}>
             <button

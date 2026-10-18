@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import JsonLd from "@/components/JsonLd";
@@ -66,6 +66,8 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
   if (!routing.locales.includes(locale as 'ko' | 'en')) notFound();
+  // 없으면 next-intl이 headers()로 locale을 읽어 페이지 전체가 동적 렌더링된다
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 

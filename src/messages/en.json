@@ -1,20 +1,31 @@
 {
   "nav": {
-    "about": "About",
-    "projects": "Projects",
-    "skills": "Skills",
-    "experience": "Experience",
-    "blog": "Blog",
-    "contact": "Contact",
-    "menu_open": "Menu"
+    "label": "Sections",
+    "lang": "Language",
+    "skip": "Skip to content"
   },
   "hero": {
     "role": "Product Engineer",
     "name": "KiJeong Yang",
-    "tagline": "From planning and design to deployment and operations,",
-    "tagline2": "a product engineer who drives the full product lifecycle.",
-    "cta_projects": "View Projects",
-    "cta_contact": "Contact Me"
+    "tagline": "A product engineer who drives the full product lifecycle, from planning and design to deployment and operations.",
+    "facts": {
+      "now_k": "Now",
+      "now_v": "UTAREX — end-to-end IoT product development",
+      "career_k": "Career",
+      "career_v": "<b>{years, plural, one {# yr} other {# yrs}} {months, plural, one {# mo} other {# mos}}</b> · Android · AOSP · Embedded · Web",
+      "proof_k": "Field",
+      "proof_v": "Shipped <b>150 units to 60+ GS25 stores</b>",
+      "impact_k": "Impact",
+      "impact_v": "Data loss rate <muted>4.0%</muted> → <ok>0%</ok>",
+      "ops_k": "Ops",
+      "ops_v": "MCP server <b>26 tools · 166 sessions</b>"
+    },
+    "menu_label": "Quick links",
+    "menu_q": "What would you like to see first?",
+    "cta_projects": "View projects",
+    "cta_contact": "Contact me",
+    "menu_hint": "Press 1–3 or click",
+    "new_tab": "(opens in new tab)"
   },
   "about": {
     "section_label": "About",
@@ -89,5 +100,8 @@
     "subtitle": "Commit activity over the past year",
     "total": "{count} contributions",
     "tooltip": "{date}: {count} commits"
+  },
+  "terminal": {
+    "welcome": "Welcome to kjyang.kro.kr"
   }
 }

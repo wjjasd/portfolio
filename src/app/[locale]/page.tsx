@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -8,11 +9,15 @@ import GitHubContributions from "@/components/GitHubContributions";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  // layout과 page는 병렬 렌더링되므로 page에서도 호출해야 정적 렌더링이 유지된다
+  setRequestLocale(locale);
+
   return (
     <>
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Projects />

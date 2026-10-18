@@ -34,6 +34,8 @@
     color: var(--color-fg);
     font-size: 15px;
     scroll-behavior: smooth;
+    /* sticky nav 48px + 여유 8px — 앵커 점프 시 섹션 명령줄이 nav에 가리지 않게 */
+    scroll-padding-top: 56px;
   }
 
   @media (min-width: 768px) {
