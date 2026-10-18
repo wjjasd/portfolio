@@ -39,7 +39,7 @@
 | jQuery | DOM 조작·이벤트 처리 |
 | Ajax | 비동기 HTTP 통신 |
 | JSP | 서버사이드 뷰 |
-| Next.js 14 (App Router) | 포트폴리오 웹사이트 |
+| Next.js 16 (App Router) | 포트폴리오 웹사이트 |
 | TypeScript | Next.js 프로젝트 전체 적용 |
 | Tailwind CSS | 스타일링 |
 | React Server Components | 포트폴리오 섹션 서버 렌더링, 클라이언트 JS 최소화 |
@@ -66,7 +66,7 @@
 | Vercel | 포트폴리오 웹사이트 배포 |
 | Cloudflare Pages | 회사 소개 웹사이트 배포·운영 |
 | Google Play Store | Android 앱 배포 (MyCONECT) |
-| EmailJS | 문의 폼 연동 |
+| Web3Forms | 문의 폼 연동 |
 
 ## 데이터베이스
 

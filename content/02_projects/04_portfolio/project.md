@@ -2,7 +2,7 @@
 
 ## 한 줄 요약
 
-기획·디자인·개발·배포 전 과정 단독 수행 — Next.js 14 + TypeScript 풀스택, 이 사이트 자체가 라이브 데모
+기획·디자인·개발·배포 전 과정 단독 수행 — Next.js 16 + TypeScript 풀스택, 이 사이트 자체가 라이브 데모
 
 ## 기본 정보
 
@@ -31,12 +31,12 @@
 
 | 영역 | 기술 |
 |------|------|
-| 프레임워크 | Next.js 14 (App Router) / TypeScript |
+| 프레임워크 | Next.js 16 (App Router) / TypeScript |
 | 스타일링 | Tailwind CSS |
 | 렌더링 | React Server Components · SSG/ISR |
 | 애니메이션 | CSS 애니메이션 (keyframes · steps) |
 | 배포 | Vercel (Free Tier) |
-| 문의 폼 | EmailJS |
+| 문의 폼 | Web3Forms |
 | 블로그 연동 | Tistory RSS 파싱 (dev-yangkj.tistory.com) |
 | AI 도구 | Claude (기획·개발 전반 활용) |
 
