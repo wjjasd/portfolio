@@ -15,7 +15,8 @@
 | 프레임워크 | Next.js 16 (App Router) |
 | 언어 | TypeScript |
 | 스타일링 | Tailwind CSS v4 |
-| 애니메이션 | Framer Motion |
+| 렌더링 | React Server Components · SSG/ISR |
+| 애니메이션 | CSS 애니메이션 (keyframes · steps) |
 | 문의 폼 | Web3Forms |
 | 분석 | Google Analytics 4 |
 | 배포 | Vercel |

@@ -1,93 +1,121 @@
 {
   "nav": {
-    "about": "About",
-    "projects": "Projects",
-    "skills": "Skills",
-    "experience": "Experience",
-    "blog": "Blog",
-    "contact": "Contact",
-    "menu_open": "Menu"
+    "label": "Sections",
+    "lang": "Language",
+    "skip": "Skip to content"
   },
   "hero": {
     "role": "Product Engineer",
     "name": "KiJeong Yang",
-    "tagline": "From planning and design to deployment and operations,",
-    "tagline2": "a product engineer who drives the full product lifecycle.",
-    "cta_projects": "View Projects",
-    "cta_contact": "Contact Me"
+    "tagline": "A product engineer who drives the full product lifecycle, from planning and design to deployment and operations.",
+    "facts": {
+      "now_k": "Now",
+      "now_v": "UTAREX — end-to-end IoT product development",
+      "career_k": "Career",
+      "career_v": "<b>{years, plural, one {# yr} other {# yrs}} {months, plural, one {# mo} other {# mos}}</b> · Android · AOSP · Embedded · Web",
+      "proof_k": "Field",
+      "proof_v": "Shipped <b>150 units to 60+ GS25 stores</b>",
+      "impact_k": "Impact",
+      "impact_v": "Data loss rate <muted>4.0%</muted> → <ok>0%</ok>",
+      "ops_k": "Ops",
+      "ops_v": "MCP server <b>26 tools · 166 sessions</b>"
+    },
+    "menu_label": "Quick links",
+    "menu_q": "What would you like to see first?",
+    "cta_projects": "View projects",
+    "cta_contact": "Contact me",
+    "menu_hint": "Press 1–3 or click",
+    "new_tab": "(opens in new tab)"
   },
   "about": {
-    "section_label": "About",
     "title": "About Me",
     "name": "KiJeong Yang",
     "role": "Product Engineer",
-    "cert": "Engineer Information Processing",
-    "profile_zoom": "View profile photo",
-    "close": "Close",
-    "profile_caption": "KiJeong Yang · Product Engineer",
+    "cert": "Engineer Information Processing (2019.11)",
+    "focus": "Android · Embedded · Web · Backend/Infra · Automation",
     "p1": "I turn ideas into real products.",
     "p2": "Starting with a simple order-recording app I built while working as a server in 2017, I have worked across the full spectrum of product development — Android, AOSP, embedded systems, web, backend, deployment, and operations.",
     "p3": "Beyond just implementing features, I focus on reliably solving real user problems in production environments.",
     "p4": "Currently at an AIoT solutions company, I handle end-to-end IoT product development: RK3588-based Android/Linux gateway development, Modbus/BLE/Sub-G sensor integration, and cloud monitoring platform connectivity.",
-    "tags": ["Android / Mobile", "Embedded / Hardware", "Web Frontend", "Backend / Infra", "Analytics / SEO", "Automation / Collaboration"]
+    "profile_zoom": "View profile photo",
+    "profile_caption": "KiJeong Yang · Product Engineer",
+    "close": "Close"
   },
   "projects": {
-    "section_label": "Projects",
     "title": "Projects",
-    "live_demo": "The website you are viewing right now is the live demo.",
-    "image_button": "Images ({count})",
-    "demo_video": "Demo Video",
-    "thumbnail_alt": "thumbnail"
+    "index_label": "Project list",
+    "open": "View details",
+    "close": "Close",
+    "contribution": "{n}% contribution",
+    "diff_label": "Improvement metrics",
+    "tags_label": "Tech stack",
+    "media_count": "{images, plural, =0 {} one {# image} other {# images}}{videos, plural, =0 {} one { · # video} other { · # videos}}",
+    "status_live": "Live",
+    "status_internal": "In use internally",
+    "status_delivered": "Delivered",
+    "status_released": "Released",
+    "status_ended": "Discontinued",
+    "status_here": "you are here",
+    "m_background": "Background",
+    "m_roles": "My role & contributions",
+    "m_results": "Results",
+    "m_stack": "Tech stack",
+    "m_media": "Media",
+    "m_links": "Links",
+    "g_prev": "Previous media",
+    "g_next": "Next media",
+    "m_loading": "Loading…",
+    "m_error": "Could not load the details. Please refresh the page."
   },
   "skills": {
-    "section_label": "Skills",
     "title": "Tech Stack",
-    "cert_title": "Certifications",
+    "legend": "<b>Bold</b> = primary at work",
+    "core_sr": "primary",
     "cert": "Engineer Information Processing",
+    "cert_open": "View certificate",
+    "cert_alt": "Engineer Information Processing certificate",
     "close": "Close"
   },
   "experience": {
-    "section_label": "Experience",
     "title": "Experience",
+    "total": "Total <b>{years, plural, one {# yr} other {# yrs}} {months, plural, one {# mo} other {# mos}}</b>",
     "current_badge": "Current",
-    "total_label": "Total",
-    "year": "yr",
-    "month": "mo"
+    "present": "Present",
+    "edu_sr": "Education:"
   },
   "blog": {
-    "section_label": "Blog",
-    "title": "Blog",
-    "view_all": "View All Posts"
+    "title": "Latest Blog Posts",
+    "view_all": "View all posts",
+    "empty": "Could not load the RSS feed right now."
   },
   "contact": {
-    "section_label": "Contact",
     "title": "Get in Touch",
     "subtitle": "Feel free to reach out if you have any questions.",
-    "email_label": "Email",
-    "linkedin_label": "LinkedIn",
-    "linkedin_display": "LinkedIn Profile",
-    "blog_label": "Blog",
+    "linkedin_display": "LinkedIn profile",
+    "form_title": "Send a message",
     "form_name": "Name",
     "form_name_placeholder": "John Doe",
     "form_email": "Email",
     "form_message": "Message",
     "form_message_placeholder": "Hi, I have a question...",
-    "form_submit": "Send Message",
-    "form_submitting": "Sending...",
-    "form_success": "Your message has been sent.",
+    "form_submit": "Send message",
+    "form_hint": "I'll reply by email",
+    "form_submitting": "Sending",
+    "form_success": "Your message has been sent. I'll get back to you by email.",
     "form_error": "Failed to send. Please try again."
   },
-  "gallery": {
-    "close": "Close",
-    "prev": "Previous",
-    "next": "Next",
-    "dot_label": "Image {index}"
-  },
   "github": {
-    "section_label": "GitHub",
     "title": "GitHub Contributions",
-    "subtitle": "Commit activity over the past year",
-    "total": "{count} contributions",
-    "tooltip": "{date}: {count} commits"
+    "summary": "<b>{count}</b> contributions in the last year",
+    "heat_label": "GitHub contribution heatmap for the last year, {count} total",
+    "unavailable": "Could not load contribution data right now."
+  },
+  "terminal": {
+    "welcome": "Welcome to kjyang.kro.kr",
+    "status_done": "Done:",
+    "status_in_progress": "In progress:",
+    "status_todo": "Shared:",
+    "diff_before": "Before:",
+    "diff_after": "After:"
   }
 }

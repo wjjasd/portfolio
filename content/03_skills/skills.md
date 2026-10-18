@@ -39,10 +39,11 @@
 | jQuery | DOM 조작·이벤트 처리 |
 | Ajax | 비동기 HTTP 통신 |
 | JSP | 서버사이드 뷰 |
-| Next.js 14 (App Router) | 포트폴리오 웹사이트 |
+| Next.js 16 (App Router) | 포트폴리오 웹사이트 |
 | TypeScript | Next.js 프로젝트 전체 적용 |
 | Tailwind CSS | 스타일링 |
-| Framer Motion | 페이지 전환·스크롤 애니메이션 |
+| React Server Components | 포트폴리오 섹션 서버 렌더링, 클라이언트 JS 최소화 |
+| CSS 애니메이션 (keyframes · steps) | 포트폴리오 터미널 타이핑·스피너 연출 |
 | SSR / SSG | SEO 최적화 혼용 구현 |
 | 반응형 레이아웃 | 모바일 ~ 데스크톱 대응 |
 | RSS 파싱 | Tistory 블로그 최신 글 자동 연동 |
@@ -65,7 +66,7 @@
 | Vercel | 포트폴리오 웹사이트 배포 |
 | Cloudflare Pages | 회사 소개 웹사이트 배포·운영 |
 | Google Play Store | Android 앱 배포 (MyCONECT) |
-| EmailJS | 문의 폼 연동 |
+| Web3Forms | 문의 폼 연동 |
 
 ## 데이터베이스
 

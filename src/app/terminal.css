@@ -1,0 +1,1066 @@
+/*
+  터미널 프리미티브 스타일 (src/components/terminal/*)
+  - 기본 상태(html에 data-term 없음) = 완성된 정적 화면
+  - 숨김·재생 규칙은 전부 html[data-term="play"] 아래에만 둔다 (ADR ③-4)
+*/
+
+:root {
+  --type-char: 26ms;
+  --type-char-hero: 75ms;
+}
+
+@layer components {
+  .glyph {
+    display: inline-block;
+    flex: none;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+
+  /* PromptLine */
+  .prompt {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-fg);
+    white-space: nowrap;
+  }
+  .ps1 {
+    color: var(--color-accent);
+  }
+  .cmd {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .caret {
+    display: none;
+    width: 0.55em;
+    height: 1.1em;
+    margin-left: 2px;
+    background: var(--color-fg);
+    vertical-align: -0.18em;
+  }
+  .sec-title {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+    color: var(--color-fg-strong);
+  }
+  @media (min-width: 768px) {
+    .prompt {
+      font-size: 1.25rem;
+    }
+    .sec-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* OutputBlock */
+  .out {
+    margin-top: 1.5rem;
+  }
+  .out > * + * {
+    margin-top: 1rem;
+  }
+  .out p {
+    max-width: 68ch;
+  }
+
+  /* Spinner */
+  .spin {
+    color: var(--color-fg-muted);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .spin-intro {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  .frames {
+    position: relative;
+    display: inline-block;
+    width: 1.2ch;
+    height: 1em;
+    vertical-align: -0.12em;
+    color: var(--color-accent);
+  }
+  .frames > span {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    visibility: hidden;
+    animation: term-frame var(--spin-cycle, 600ms) linear
+      calc(var(--spin-start, 0ms) + var(--f) * var(--spin-cycle, 600ms) / 10)
+      var(--spin-iter, infinite);
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-fg-muted) 0%,
+      var(--color-fg-muted) 35%,
+      var(--color-fg-strong) 50%,
+      var(--color-fg-muted) 65%,
+      var(--color-fg-muted) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: term-shimmer 900ms linear infinite;
+  }
+
+  /* ToolCallHeader */
+  .toolcall {
+    display: flex;
+    align-items: baseline;
+    column-gap: 1ch;
+    min-width: 0;
+  }
+  .toolcall .dot {
+    flex: none;
+    color: var(--color-fg-muted);
+  }
+  .toolcall[data-state="pending"] .dot {
+    animation: term-blink 800ms steps(1) infinite;
+  }
+  .toolcall[data-state="ok"] .dot {
+    color: var(--color-success);
+  }
+  .toolcall[data-state="fail"] .dot {
+    color: var(--color-error);
+  }
+  .tc-call {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tc-name {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .tc-arg {
+    color: var(--color-fg-muted);
+  }
+  .tc-result {
+    display: flex;
+    align-items: baseline;
+    gap: 1ch;
+    padding-left: 2ch;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .tc-result .elbow {
+    color: var(--color-fg-dim);
+  }
+
+  /* Checklist */
+  .check li {
+    display: grid;
+    grid-template-columns: 2ch 1fr;
+    column-gap: 1ch;
+    padding: 2px 0;
+    font-size: 0.9375rem;
+  }
+  .check .box {
+    color: var(--color-fg-dim);
+  }
+  .check [data-status="done"] .box {
+    color: var(--color-success);
+  }
+  .check [data-status="doing"] {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .check [data-status="doing"] .box {
+    color: var(--color-accent);
+  }
+  .check [data-status="todo"] {
+    color: var(--color-fg-dim);
+  }
+
+  /* Hero — whoami 출력. 줄 하나가 Welcome 박스 tagline(LCP 앵커)보다 작아야 한다 (ADR ③-2) */
+  .prompt-hero {
+    font-size: 1.0625rem;
+  }
+  .facts {
+    position: relative;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+  }
+  .facts .row {
+    display: grid;
+    grid-template-columns: 4em 1fr;
+    column-gap: 1.5ch;
+    padding: 2px 0;
+  }
+  .facts .k {
+    color: var(--color-fg-dim);
+  }
+  .facts b {
+    color: var(--color-fg-strong);
+    font-weight: 700;
+  }
+
+  /* SelectMenu — 기본은 1번에 ❯, hover/focus한 항목으로 이동 */
+  .menu {
+    margin-top: 1.5rem;
+  }
+  .menu-q {
+    font-size: 0.9375rem;
+    color: var(--color-fg-muted);
+  }
+  .menu ol {
+    margin-top: 0.5rem;
+  }
+  .menu a {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 40px;
+    color: var(--color-fg);
+  }
+  .menu .ptr {
+    display: inline-flex;
+    width: 1em;
+    color: var(--color-accent);
+    visibility: hidden;
+  }
+  .menu .num {
+    color: var(--color-fg-dim);
+  }
+  .menu li:first-child .ptr {
+    visibility: visible;
+  }
+  .menu li:first-child a {
+    color: var(--color-accent);
+  }
+  .menu ol:is(:hover, :focus-within) .ptr {
+    visibility: hidden;
+  }
+  .menu ol:is(:hover, :focus-within) a {
+    color: var(--color-fg);
+  }
+  .menu ol a:is(:hover, :focus-visible) {
+    color: var(--color-accent);
+  }
+  .menu ol a:is(:hover, :focus-visible) .ptr {
+    visibility: visible;
+  }
+  .menu a:focus-visible {
+    outline-offset: 0;
+  }
+  .menu-hint {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  @media (hover: none), (pointer: coarse) {
+    .menu-hint {
+      display: none;
+    }
+  }
+
+  /* About — cat ~/.profile */
+  .profile {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .out.profile > * + * {
+    margin-top: 0;
+  }
+  @media (min-width: 768px) {
+    .profile {
+      grid-template-columns: 168px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+  }
+  .avatar {
+    display: block;
+    width: 120px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    cursor: zoom-in;
+    transition: border-color 150ms ease-out;
+  }
+  .avatar:hover {
+    border-color: var(--color-line-input);
+  }
+  @media (min-width: 768px) {
+    .avatar {
+      width: 168px;
+    }
+  }
+  .kv {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 2ch;
+    row-gap: 2px;
+  }
+  .kv dt {
+    padding-top: 1px;
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+  }
+  .kv dd {
+    color: var(--color-fg);
+  }
+  .about-body p {
+    max-width: 68ch;
+  }
+  .about-body p + p {
+    margin-top: 0.75rem;
+  }
+  .about-body .lead {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+
+  /* Skills — ls skills/* */
+  .legend {
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .out > .ls-group + .ls-group {
+    margin-top: 1.5rem;
+  }
+  .ls-dir {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  /* 360px에서도 2열이 되도록 모바일은 15ch, 넓어지면 시안의 19ch */
+  .ls-items {
+    margin-top: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15ch, 1fr));
+    column-gap: 2ch;
+    color: var(--color-fg-muted);
+  }
+  @media (min-width: 640px) {
+    .ls-items {
+      grid-template-columns: repeat(auto-fill, minmax(19ch, 1fr));
+    }
+  }
+  .ls-items .core {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .btn-open {
+    min-height: 32px;
+    padding: 6px 0;
+    font-size: 0.8125rem;
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+  .btn-open:hover {
+    color: var(--color-fg-strong);
+  }
+  .btn-open .k {
+    color: var(--color-accent);
+  }
+
+  /* Experience — git log --graph. 세로선은 텍스트 | 대신 border (한글 줄바꿈에서 끊기지 않게) */
+  .commit {
+    position: relative;
+    padding: 0 0 2rem 3ch;
+  }
+  .commit::before {
+    content: "";
+    position: absolute;
+    left: 0.5ch;
+    top: 1.5em;
+    bottom: 0.2em;
+    border-left: 1px solid var(--color-line-strong);
+  }
+  .commit:last-child {
+    padding-bottom: 0;
+  }
+  .commit:last-child::before {
+    display: none;
+  }
+  .commit .node {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    width: 1ch;
+    line-height: 1.7;
+    font-weight: 700;
+    color: var(--color-fg-muted);
+  }
+  .commit.head .node {
+    color: var(--color-accent);
+  }
+  .c-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 1ch;
+  }
+  .hash {
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+  }
+  .ref {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .ref.tag {
+    font-weight: 400;
+    color: var(--color-fg-muted);
+  }
+  .co {
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    font-weight: 600;
+    color: var(--color-fg-strong);
+  }
+  .c-meta {
+    margin-top: 2px;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .c-tasks {
+    margin-top: 0.5rem;
+  }
+  .c-tasks li {
+    position: relative;
+    padding-left: 2ch;
+    font-size: 0.9375rem;
+  }
+  .c-tasks li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: var(--color-fg-dim);
+  }
+
+  /* 모달 (<dialog> + showModal). 프로필·자격증 확대, P4 프로젝트 모달도 같은 틀 */
+  .term-dialog {
+    margin: auto;
+    width: calc(100% - 24px);
+    max-width: 760px;
+    max-height: calc(100% - 48px);
+    padding: 0;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-fg);
+  }
+  .term-dialog::backdrop {
+    background: rgb(0 0 0 / 0.78);
+  }
+  .m-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+  .m-caption {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .m-close {
+    min-height: 32px;
+    padding: 2px 8px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+  }
+  .m-close:hover {
+    border-color: var(--color-line-input);
+    color: var(--color-fg-strong);
+  }
+  .m-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* DiffBlock */
+  .diff {
+    font-size: 0.875rem;
+    border-left: 2px solid var(--color-line-strong);
+    padding: 2px 0 2px 12px;
+  }
+  .diff .del {
+    color: var(--color-error);
+  }
+  .diff .add {
+    color: var(--color-success);
+  }
+}
+
+/* ===== PLAY 모드 (세션 첫 진입 + reduced-motion 아님) =====
+   Hero 타임라인: 0.15–0.60s whoami 타이핑 · 0.60–1.20s 스피너 · 1.20–1.90s 출력 stagger */
+html[data-term="play"] .prompt-hero .cmd {
+  width: 0;
+  animation: term-type calc(var(--n) * var(--type-char-hero)) steps(var(--n), end) 150ms forwards;
+}
+html[data-term="play"] .prompt-hero .caret {
+  display: inline-block;
+  animation: term-caret-off 600ms steps(1, end) forwards;
+}
+html[data-term="play"] .spin-intro {
+  display: block;
+  opacity: 0;
+  animation: term-spin-window 1200ms steps(1, end) forwards;
+}
+/* shimmer는 background-clip:text라 매 프레임 main-thread paint. 창이 열린 600ms만 돌린다 */
+html[data-term="play"] .spin-intro .shimmer {
+  animation: term-shimmer 600ms linear 600ms 1;
+}
+html[data-term="play"] [data-reveal] {
+  opacity: 0;
+  animation: term-reveal 300ms ease-out calc(1200ms + var(--i) * 80ms) forwards;
+}
+
+/* 섹션 명령 — TerminalRuntime이 data-typed를 pending → run 으로 바꾼다 */
+html[data-term="play"] .prompt[data-typed="pending"] .cmd {
+  width: 0;
+}
+html[data-term="play"] .prompt[data-typed="run"] .cmd {
+  width: 0;
+  animation: term-type calc(var(--n) * var(--type-char)) steps(var(--n), end) forwards;
+}
+html[data-term="play"] .prompt[data-typed="run"] .caret {
+  display: inline-block;
+  animation: term-caret-off calc(var(--n) * var(--type-char) + 160ms) steps(1, end) forwards;
+}
+
+@keyframes term-type {
+  from { width: 0; }
+  to { width: calc(var(--n) * 1ch); }
+}
+@keyframes term-caret-off {
+  from { visibility: visible; }
+  to { visibility: hidden; }
+}
+@keyframes term-spin-window {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+@keyframes term-reveal {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes term-frame {
+  0% { visibility: visible; }
+  10% { visibility: hidden; }
+  100% { visibility: hidden; }
+}
+@keyframes term-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+@keyframes term-blink {
+  50% { opacity: 0; }
+}
+
+/* 이중 안전장치 (ADR ③-8): reduced-motion이면 play여도 최종 상태 */
+@media (prefers-reduced-motion: reduce) {
+  .cmd,
+  .caret,
+  .spin,
+  .frames > span,
+  .shimmer,
+  .toolcall .dot,
+  [data-reveal] {
+    animation: none !important;
+  }
+  html[data-term="play"] .cmd {
+    width: auto !important;
+  }
+  html[data-term="play"] [data-reveal] {
+    opacity: 1 !important;
+  }
+  .spin-intro,
+  .caret {
+    display: none !important;
+  }
+  .frames > span:first-child {
+    visibility: visible;
+  }
+  .shimmer {
+    color: var(--color-fg-muted);
+    background: none;
+  }
+}
+
+/* ===== P4: Projects · GitHub · Blog · Contact · Footer ===== */
+@layer components {
+  /* Projects — ls projects/ */
+  .ls-line {
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+  }
+  .out > .ls-line + nav {
+    margin-top: 0.25rem;
+  }
+  .ls-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 2.5ch;
+    font-size: 0.9375rem;
+  }
+  .ls-index a {
+    display: inline-block;
+    padding: 4px 0;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .ls-index a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cards {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 860px) {
+    .cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    cursor: pointer;
+    scroll-margin-top: 64px;
+    transition: border-color 150ms ease-out;
+  }
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--color-line-input);
+  }
+  .card:target {
+    border-color: var(--color-accent-line);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+  }
+  .card .dir {
+    min-width: 0;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .card .status {
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+  .card h3 {
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    font-weight: 600;
+    color: var(--color-fg-strong);
+  }
+  .card .meta {
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .card .one {
+    font-size: 0.9375rem;
+  }
+  .kpis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 1.5rem;
+    padding: 4px 0;
+  }
+  .kpi b {
+    font-size: 1.375rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-fg-strong);
+  }
+  .kpi span {
+    margin-left: 6px;
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .diff b {
+    font-weight: 700;
+  }
+  .hl li {
+    position: relative;
+    padding-left: 2ch;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .hl li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: var(--color-fg-dim);
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tags li {
+    padding: 1px 8px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  .card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--color-line);
+    font-size: 0.8125rem;
+  }
+  .card-foot > a {
+    padding: 6px 0;
+    color: var(--color-fg-muted);
+  }
+  .card-foot > a:hover {
+    color: var(--color-fg-strong);
+  }
+
+  /* 프로젝트 모달 본문 */
+  .term-dialog .m-head .tc {
+    flex: 1;
+    min-width: 0;
+  }
+  .m-body {
+    padding: 1.5rem 20px 2rem;
+  }
+  .m-body h3 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+    color: var(--color-fg-strong);
+  }
+  .m-meta {
+    margin-top: 2px;
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .m-body h4 {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-fg-strong);
+  }
+  .m-body h4 .h {
+    font-weight: 400;
+    color: var(--color-fg-dim);
+  }
+  .m-body p {
+    font-size: 0.9375rem;
+  }
+  /* 모달 열 때 ⏺ Read 대기 260ms → 완료. dialog가 display:none에서 나올 때마다 다시 재생된다 */
+  .term-dialog[open] .tc-read .dot {
+    animation: term-read 260ms steps(1, end);
+  }
+  /* 본문 청크를 받는 동안 ⏺ 깜빡임 → 도착하면 위 term-read로 바뀌며 완료 표시 */
+  .term-dialog[open][data-state="pending"] .tc-read .dot {
+    color: var(--color-fg-muted);
+    animation: term-blink 800ms steps(1) infinite;
+  }
+  .term-dialog[data-state="fail"] .tc-read .dot {
+    color: var(--color-error);
+    animation: none;
+  }
+  .m-pending {
+    margin-top: 1.5rem;
+    color: var(--color-fg-muted);
+  }
+
+  .viewer {
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    background: #0d0d0d;
+  }
+  .v-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    animation: term-fade 160ms ease-out;
+  }
+  .v-frame img {
+    object-fit: contain;
+  }
+  .v-frame video {
+    width: 100%;
+    height: 100%;
+  }
+  .v-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 6px 8px;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.8125rem;
+  }
+  .v-cap {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    color: var(--color-fg-muted);
+  }
+
+  .link:hover,
+  .contacts dd a:hover,
+  .feed a:hover {
+    color: var(--color-fg-strong);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 3px;
+  }
+
+  /* GitHub — 히트맵만 가로 스크롤 허용 */
+  .heat {
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .heat svg path {
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+  .lvl-0 {
+    --hc: #1c1c1c;
+  }
+  .lvl-1 {
+    --hc: color-mix(in srgb, var(--color-accent) 28%, #1c1c1c);
+  }
+  .lvl-2 {
+    --hc: color-mix(in srgb, var(--color-accent) 52%, #1c1c1c);
+  }
+  .lvl-3 {
+    --hc: color-mix(in srgb, var(--color-accent) 76%, #1c1c1c);
+  }
+  .lvl-4 {
+    --hc: var(--color-accent);
+  }
+  .heat path {
+    fill: var(--hc);
+    stroke: var(--hc);
+  }
+  .out > .heat + .heat-legend {
+    margin-top: 0.5rem;
+  }
+  .heat-legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--color-fg-muted);
+  }
+  .heat-legend i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--hc);
+  }
+
+  /* Blog — head -5 blog.rss */
+  .feed li {
+    display: grid;
+    grid-template-columns: 10ch 1fr;
+    column-gap: 2ch;
+    padding: 4px 0;
+  }
+  .feed time {
+    padding-top: 1px;
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+  }
+  .feed .arrow {
+    color: var(--color-fg-dim);
+  }
+
+  /* Contact — cat ~/.contacts + mail --to kjyang */
+  .contacts dd a {
+    display: inline-block;
+    padding: 2px 0;
+  }
+  .panel {
+    padding: 20px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+  @media (min-width: 768px) {
+    .panel {
+      padding: 1.5rem;
+    }
+  }
+  .form {
+    display: grid;
+    gap: 1rem;
+  }
+  .prompt-static {
+    font-size: 1rem;
+  }
+  .form-title {
+    margin-top: -0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-fg-strong);
+  }
+  .form .two {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .form .two {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+  }
+  .field .flag {
+    margin-left: 1ch;
+    color: var(--color-fg-dim);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-line-input);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-fg-strong);
+  }
+  .field textarea {
+    min-height: 128px;
+    resize: vertical;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--color-fg-dim);
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-accent-ink);
+    cursor: pointer;
+  }
+  .btn:hover {
+    filter: brightness(1.08);
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn:focus-visible {
+    outline-color: var(--color-fg-strong);
+  }
+  .send-log > * + * {
+    margin-top: 2px;
+  }
+  .send-log .body {
+    padding-left: 2ch;
+    font-size: 0.9375rem;
+  }
+
+  /* Footer — ❯ █ */
+  .site-foot {
+    padding: 3rem 0 4.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+  .live {
+    font-size: 1.125rem;
+  }
+  .block-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.15em;
+    background: var(--color-fg);
+    vertical-align: -0.2em;
+    animation: term-blink 1060ms steps(1) infinite;
+  }
+  .foot-meta {
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+}
+
+@keyframes term-read {
+  from { color: var(--color-fg-muted); opacity: 0.4; }
+  to { color: var(--color-success); opacity: 1; }
+}
+@keyframes term-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block-cursor,
+  .v-frame,
+  .term-dialog[open] .tc-read .dot {
+    animation: none !important;
+  }
+  .card {
+    transition: none;
+  }
+}

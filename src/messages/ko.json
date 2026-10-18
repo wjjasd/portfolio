@@ -1,93 +1,121 @@
 {
   "nav": {
-    "about": "About",
-    "projects": "Projects",
-    "skills": "Skills",
-    "experience": "Experience",
-    "blog": "Blog",
-    "contact": "Contact",
-    "menu_open": "메뉴"
+    "label": "섹션 이동",
+    "lang": "언어 선택",
+    "skip": "본문으로 건너뛰기"
   },
   "hero": {
     "role": "Product Engineer",
     "name": "양기정",
-    "tagline": "기획·설계부터 배포·운영까지,",
-    "tagline2": "제품 전 사이클을 직접 이끄는 프로덕트 엔지니어",
+    "tagline": "기획·설계부터 배포·운영까지, 제품 전 사이클을 직접 이끄는 프로덕트 엔지니어",
+    "facts": {
+      "now_k": "현재",
+      "now_v": "유타렉스(UTAREX) — IoT 제품 개발 전반",
+      "career_k": "경력",
+      "career_v": "<b>{years}년 {months}개월</b> · Android · AOSP · 임베디드 · 웹",
+      "proof_k": "실증",
+      "proof_v": "GS25 <b>60여 개 매장 · 150대</b> 납품",
+      "impact_k": "개선",
+      "impact_v": "데이터 누락률 <muted>4.0%</muted> → <ok>0%</ok>",
+      "ops_k": "운영",
+      "ops_v": "MCP 서버 <b>26 tools · 166 세션</b>"
+    },
+    "menu_label": "바로가기",
+    "menu_q": "무엇을 먼저 보시겠어요?",
     "cta_projects": "프로젝트 보기",
-    "cta_contact": "연락하기"
+    "cta_contact": "연락하기",
+    "menu_hint": "숫자키 1–3 또는 클릭",
+    "new_tab": "(새 탭)"
   },
   "about": {
-    "section_label": "About",
     "title": "자기소개",
     "name": "양기정",
     "role": "Product Engineer",
-    "cert": "정보처리기사",
-    "profile_zoom": "프로필 사진 크게 보기",
-    "close": "닫기",
-    "profile_caption": "양기정 · Product Engineer",
+    "cert": "정보처리기사 (2019.11)",
+    "focus": "Android · 임베디드 · 웹 · 백엔드/인프라 · 자동화",
     "p1": "아이디어를 실제 제품으로 바꾸는 일을 합니다.",
     "p2": "2017년 서빙 업무 중 주문 기록 앱을 만든 것을 시작으로, Android, AOSP, 임베디드, 웹, 서버, 배포와 운영까지 제품 개발의 전 과정을 경험해왔습니다.",
     "p3": "단순히 기능을 구현하는 것을 넘어, 사용자의 문제를 실제 환경에서 안정적으로 해결하는 데 집중합니다.",
     "p4": "현재는 AIoT 솔루션 기업에서 RK3588 기반 Android·Linux 게이트웨이 개발부터 Modbus·BLE·Sub-G 센서 연동, 클라우드 관제 플랫폼 연계까지 IoT 제품 개발 전반을 담당하고 있습니다.",
-    "tags": ["Android / 모바일", "임베디드 / 하드웨어", "웹 프론트엔드", "백엔드 / 인프라", "분석 / SEO", "자동화 / 협업"]
+    "profile_zoom": "프로필 사진 크게 보기",
+    "profile_caption": "양기정 · Product Engineer",
+    "close": "닫기"
   },
   "projects": {
-    "section_label": "Projects",
     "title": "프로젝트",
-    "live_demo": "현재 보고 계시는 웹사이트가 라이브 데모입니다",
-    "image_button": "이미지 보기 ({count})",
-    "demo_video": "데모 영상",
-    "thumbnail_alt": "썸네일"
+    "index_label": "프로젝트 목록",
+    "open": "자세히 보기",
+    "close": "닫기",
+    "contribution": "기여 {n}%",
+    "diff_label": "개선 지표",
+    "tags_label": "기술 스택",
+    "media_count": "{images, plural, =0 {} other {이미지 #}}{videos, plural, =0 {} other { · 영상 #}}",
+    "status_live": "운영 중",
+    "status_internal": "사내 사용 중",
+    "status_delivered": "납품 완료",
+    "status_released": "배포 완료",
+    "status_ended": "서비스 종료",
+    "status_here": "you are here",
+    "m_background": "배경",
+    "m_roles": "나의 역할과 기여",
+    "m_results": "정량 성과",
+    "m_stack": "기술 스택",
+    "m_media": "미디어",
+    "m_links": "링크",
+    "g_prev": "이전 미디어",
+    "g_next": "다음 미디어",
+    "m_loading": "불러오는 중…",
+    "m_error": "내용을 불러오지 못했습니다. 페이지를 새로고침해 주세요."
   },
   "skills": {
-    "section_label": "Skills",
     "title": "기술 스택",
-    "cert_title": "자격증",
+    "legend": "<b>굵은 글씨</b> = 실무 주력",
+    "core_sr": "실무 주력",
     "cert": "정보처리기사",
+    "cert_open": "자격증 보기",
+    "cert_alt": "정보처리기사 자격증",
     "close": "닫기"
   },
   "experience": {
-    "section_label": "Experience",
     "title": "경력",
+    "total": "총 경력 <b>{years}년 {months}개월</b>",
     "current_badge": "재직 중",
-    "total_label": "총 경력",
-    "year": "년",
-    "month": "개월"
+    "present": "현재",
+    "edu_sr": "교육 이력:"
   },
   "blog": {
-    "section_label": "Blog",
-    "title": "블로그",
-    "view_all": "블로그 전체 보기"
+    "title": "최근 블로그 글",
+    "view_all": "블로그 전체 보기",
+    "empty": "지금은 RSS를 불러오지 못했습니다."
   },
   "contact": {
-    "section_label": "Contact",
     "title": "연락하기",
     "subtitle": "궁금한 점이 있으시면 편하게 연락주세요.",
-    "email_label": "이메일",
-    "linkedin_label": "LinkedIn",
     "linkedin_display": "LinkedIn 프로필",
-    "blog_label": "블로그",
+    "form_title": "메시지 보내기",
     "form_name": "이름",
     "form_name_placeholder": "홍길동",
     "form_email": "이메일",
     "form_message": "메시지",
     "form_message_placeholder": "안녕하세요, 궁금한 점이 있어서 연락드립니다...",
     "form_submit": "메시지 보내기",
-    "form_submitting": "전송 중...",
-    "form_success": "메시지가 전송되었습니다.",
+    "form_hint": "답장은 이메일로 드립니다",
+    "form_submitting": "전송 중",
+    "form_success": "메시지가 전송되었습니다. 답장은 이메일로 드릴게요.",
     "form_error": "전송에 실패했습니다. 다시 시도해주세요."
   },
-  "gallery": {
-    "close": "닫기",
-    "prev": "이전",
-    "next": "다음",
-    "dot_label": "{index}번째 이미지"
-  },
   "github": {
-    "section_label": "GitHub",
     "title": "GitHub 기여",
-    "subtitle": "지난 1년간의 커밋 활동",
-    "total": "{count}개 기여",
-    "tooltip": "{date}: {count}회"
+    "summary": "지난 1년간 <b>{count}</b>개 기여",
+    "heat_label": "지난 1년 GitHub 기여 히트맵, 총 {count}개",
+    "unavailable": "지금은 기여 데이터를 불러오지 못했습니다."
+  },
+  "terminal": {
+    "welcome": "kjyang.kro.kr 에 오신 것을 환영합니다",
+    "status_done": "완료:",
+    "status_in_progress": "진행 중:",
+    "status_todo": "분담:",
+    "diff_before": "개선 전:",
+    "diff_after": "개선 후:"
   }
 }

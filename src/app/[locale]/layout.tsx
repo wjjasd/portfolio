@@ -1,15 +1,35 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import type { Metadata, Viewport } from "next";
+import { Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider, type AbstractIntlMessages } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import JsonLd from "@/components/JsonLd";
+import TerminalRuntime from "@/components/terminal/TerminalRuntime";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
+// 첫 페인트 전에 터미널 재생 여부 결정 (ADR ③-4). 속성이 없으면 정적 완성 화면
+const TERM_BOOT = `(function(){try{var d=document.documentElement;if(!sessionStorage.getItem("kj-term")&&matchMedia("(prefers-reduced-motion: no-preference)").matches){sessionStorage.setItem("kj-term","1");d.setAttribute("data-term","play")}}catch(e){}})()`;
+
+// GA4: dataLayer 명령은 즉시 쌓고 gtag.js는 첫 상호작용 또는 load 3초 뒤 idle에 받는다.
+// lazyOnload보다 늦춰서 gtag 실행(긴 작업)이 초기 로딩 구간(TBT)에 끼지 않게 한다
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GA_BOOT = GA_ID
+  ? `(function(){var id=${JSON.stringify(GA_ID)};var w=window;w.dataLayer=w.dataLayer||[];function gtag(){w.dataLayer.push(arguments)}w.gtag=gtag;gtag("js",new Date());gtag("config",id);var ev=["pointerdown","keydown","touchstart","scroll"],done=0;function load(){if(done)return;done=1;ev.forEach(function(e){w.removeEventListener(e,load,true)});var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(id);document.head.appendChild(s)}ev.forEach(function(e){w.addEventListener(e,load,{capture:true,passive:true})});w.addEventListener("load",function(){setTimeout(function(){(w.requestIdleCallback||setTimeout)(load)},3000)})})()`
+  : null;
+
+function pick(messages: AbstractIntlMessages, ns: string, keys: readonly string[]): AbstractIntlMessages {
+  const source = messages[ns];
+  if (typeof source !== "object") return {};
+  return Object.fromEntries(keys.filter((k) => k in source).map((k) => [k, source[k]]));
+}
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -58,29 +78,33 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
   if (!routing.locales.includes(locale as 'ko' | 'en')) notFound();
+  // 없으면 next-intl이 headers()로 locale을 읽어 페이지 전체가 동적 렌더링된다
+  setRequestLocale(locale);
 
   const messages = await getMessages();
+  // 클라이언트에서 useTranslations를 쓰는 곳만 직렬화: Nav(nav), ProjectDialog·ProjectModalBody(projects 모달 키, terminal sr 라벨)
+  const clientMessages: AbstractIntlMessages = {
+    nav: pick(messages, "nav", ["label", "lang", "skip"]),
+    projects: pick(messages, "projects", [
+      "m_background", "m_roles", "m_results", "m_stack", "m_media", "m_links",
+      "g_prev", "g_next", "m_loading", "m_error",
+    ]),
+    terminal: pick(messages, "terminal", ["status_done", "status_in_progress", "status_todo", "diff_before", "diff_after"]),
+  };
 
   return (
-    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100">
-        <NextIntlClientProvider messages={messages}>
+    <html lang={locale} className={`${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: TERM_BOOT }} />
+        {GA_BOOT && <script dangerouslySetInnerHTML={{ __html: GA_BOOT }} />}
+      </head>
+      <body className="min-h-full flex flex-col bg-bg text-fg font-mono">
+        <NextIntlClientProvider messages={clientMessages}>
           <JsonLd locale={locale} />
           {children}
         </NextIntlClientProvider>
+        <TerminalRuntime />
       </body>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-        strategy="lazyOnload"
-      />
-      <Script id="ga-init" strategy="lazyOnload">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-        `}
-      </Script>
     </html>
   );
 }
