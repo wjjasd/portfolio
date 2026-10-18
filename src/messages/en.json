@@ -28,19 +28,18 @@
     "new_tab": "(opens in new tab)"
   },
   "about": {
-    "section_label": "About",
     "title": "About Me",
     "name": "KiJeong Yang",
     "role": "Product Engineer",
-    "cert": "Engineer Information Processing",
-    "profile_zoom": "View profile photo",
-    "close": "Close",
-    "profile_caption": "KiJeong Yang · Product Engineer",
+    "cert": "Engineer Information Processing (2019.11)",
+    "focus": "Android · Embedded · Web · Backend/Infra · Automation",
     "p1": "I turn ideas into real products.",
     "p2": "Starting with a simple order-recording app I built while working as a server in 2017, I have worked across the full spectrum of product development — Android, AOSP, embedded systems, web, backend, deployment, and operations.",
     "p3": "Beyond just implementing features, I focus on reliably solving real user problems in production environments.",
     "p4": "Currently at an AIoT solutions company, I handle end-to-end IoT product development: RK3588-based Android/Linux gateway development, Modbus/BLE/Sub-G sensor integration, and cloud monitoring platform connectivity.",
-    "tags": ["Android / Mobile", "Embedded / Hardware", "Web Frontend", "Backend / Infra", "Analytics / SEO", "Automation / Collaboration"]
+    "profile_zoom": "View profile photo",
+    "profile_caption": "KiJeong Yang · Product Engineer",
+    "close": "Close"
   },
   "projects": {
     "section_label": "Projects",
@@ -51,19 +50,20 @@
     "thumbnail_alt": "thumbnail"
   },
   "skills": {
-    "section_label": "Skills",
     "title": "Tech Stack",
-    "cert_title": "Certifications",
+    "legend": "<b>Bold</b> = primary at work",
+    "core_sr": "primary",
     "cert": "Engineer Information Processing",
+    "cert_open": "View certificate",
+    "cert_alt": "Engineer Information Processing certificate",
     "close": "Close"
   },
   "experience": {
-    "section_label": "Experience",
     "title": "Experience",
+    "total": "Total <b>{years, plural, one {# yr} other {# yrs}} {months, plural, one {# mo} other {# mos}}</b>",
     "current_badge": "Current",
-    "total_label": "Total",
-    "year": "yr",
-    "month": "mo"
+    "present": "Present",
+    "edu_sr": "Education:"
   },
   "blog": {
     "section_label": "Blog",

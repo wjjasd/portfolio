@@ -269,6 +269,239 @@
     }
   }
 
+  /* About — cat ~/.profile */
+  .profile {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .out.profile > * + * {
+    margin-top: 0;
+  }
+  @media (min-width: 768px) {
+    .profile {
+      grid-template-columns: 168px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+  }
+  .avatar {
+    display: block;
+    width: 120px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    cursor: zoom-in;
+    transition: border-color 150ms ease-out;
+  }
+  .avatar:hover {
+    border-color: var(--color-line-input);
+  }
+  @media (min-width: 768px) {
+    .avatar {
+      width: 168px;
+    }
+  }
+  .kv {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 2ch;
+    row-gap: 2px;
+  }
+  .kv dt {
+    padding-top: 1px;
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+  }
+  .kv dd {
+    color: var(--color-fg);
+  }
+  .about-body p {
+    max-width: 68ch;
+  }
+  .about-body p + p {
+    margin-top: 0.75rem;
+  }
+  .about-body .lead {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+
+  /* Skills — ls skills/* */
+  .legend {
+    font-size: 0.8125rem;
+    color: var(--color-fg-muted);
+  }
+  .out > .ls-group + .ls-group {
+    margin-top: 1.5rem;
+  }
+  .ls-dir {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  /* 360px에서도 2열이 되도록 모바일은 15ch, 넓어지면 시안의 19ch */
+  .ls-items {
+    margin-top: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15ch, 1fr));
+    column-gap: 2ch;
+    color: var(--color-fg-muted);
+  }
+  @media (min-width: 640px) {
+    .ls-items {
+      grid-template-columns: repeat(auto-fill, minmax(19ch, 1fr));
+    }
+  }
+  .ls-items .core {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .btn-open {
+    min-height: 32px;
+    padding: 6px 0;
+    font-size: 0.8125rem;
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+  .btn-open:hover {
+    color: var(--color-fg-strong);
+  }
+  .btn-open .k {
+    color: var(--color-accent);
+  }
+
+  /* Experience — git log --graph. 세로선은 텍스트 | 대신 border (한글 줄바꿈에서 끊기지 않게) */
+  .commit {
+    position: relative;
+    padding: 0 0 2rem 3ch;
+  }
+  .commit::before {
+    content: "";
+    position: absolute;
+    left: 0.5ch;
+    top: 1.5em;
+    bottom: 0.2em;
+    border-left: 1px solid var(--color-line-strong);
+  }
+  .commit:last-child {
+    padding-bottom: 0;
+  }
+  .commit:last-child::before {
+    display: none;
+  }
+  .commit .node {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    width: 1ch;
+    line-height: 1.7;
+    font-weight: 700;
+    color: var(--color-fg-muted);
+  }
+  .commit.head .node {
+    color: var(--color-accent);
+  }
+  .c-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 1ch;
+  }
+  .hash {
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+  }
+  .ref {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .ref.tag {
+    font-weight: 400;
+    color: var(--color-fg-muted);
+  }
+  .co {
+    font-size: 1.0625rem;
+    line-height: 1.45;
+    font-weight: 600;
+    color: var(--color-fg-strong);
+  }
+  .c-meta {
+    margin-top: 2px;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .c-tasks {
+    margin-top: 0.5rem;
+  }
+  .c-tasks li {
+    position: relative;
+    padding-left: 2ch;
+    font-size: 0.9375rem;
+  }
+  .c-tasks li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: var(--color-fg-dim);
+  }
+
+  /* 모달 (<dialog> + showModal). 프로필·자격증 확대, P4 프로젝트 모달도 같은 틀 */
+  .term-dialog {
+    margin: auto;
+    width: calc(100% - 24px);
+    max-width: 760px;
+    max-height: calc(100% - 48px);
+    padding: 0;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-fg);
+  }
+  .term-dialog::backdrop {
+    background: rgb(0 0 0 / 0.78);
+  }
+  .m-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+  .m-caption {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .m-close {
+    min-height: 32px;
+    padding: 2px 8px;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+  }
+  .m-close:hover {
+    border-color: var(--color-line-input);
+    color: var(--color-fg-strong);
+  }
+  .m-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   /* DiffBlock */
   .diff {
     font-size: 0.875rem;

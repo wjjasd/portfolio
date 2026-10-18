@@ -10,17 +10,27 @@ export interface YearMonth {
 
 export interface Experience {
   company: string
+  /** git log 장식용 해시 (aria-hidden) */
+  hash: string
   ko: ExperienceI18n
   en: ExperienceI18n
-  period: string
   current: boolean
   start: YearMonth
   end?: YearMonth
 }
 
+export interface Education {
+  hash: string
+  ko: { org: string; course: string }
+  en: { org: string; course: string }
+  start: YearMonth
+  end: YearMonth
+}
+
 export const experiences: Experience[] = [
   {
     company: '유타렉스 (UTAREX)',
+    hash: '3f9a2c1',
     ko: {
       role: 'Android 개발 / 임베디드 / 웹 프론트엔드 / 클라우드 설계',
       tasks: [
@@ -45,12 +55,12 @@ export const experiences: Experience[] = [
         'In-house productivity tools development (Daily Reporter, Python aggregation automation)',
       ],
     },
-    period: '2024.02 ~ 현재',
     current: true,
     start: { year: 2024, month: 2 },
   },
   {
     company: '홀리츠 (Holich)',
+    hash: '8b41d07',
     ko: {
       role: 'Android 개발',
       tasks: [
@@ -69,12 +79,24 @@ export const experiences: Experience[] = [
         'Built in-house BLE dev tool Bluetena',
       ],
     },
-    period: '2021.01 ~ 2023.04',
     current: false,
     start: { year: 2021, month: 1 },
     end: { year: 2023, month: 4 },
   },
 ]
+
+// 경력 합산에서 제외. git log 그래프의 (tag: init) 커밋으로만 표시 (ADR ⑦)
+export const education: Education = {
+  hash: '1e0c5aa',
+  ko: { org: '더조은컴퓨터아카데미', course: '풀스택개발자과정' },
+  en: { org: 'The Joeun Computer Academy', course: 'Full-Stack Developer Program' },
+  start: { year: 2020, month: 7 },
+  end: { year: 2021, month: 1 },
+}
+
+export function formatYearMonth({ year, month }: YearMonth): string {
+  return `${year}.${String(month).padStart(2, '0')}`
+}
 
 // 렌더 중 Date를 읽으므로 서버 컴포넌트에서 호출할 것 (ADR ③-7)
 export function calcTotalMonths(exps: Experience[], now: Date = new Date()): number {

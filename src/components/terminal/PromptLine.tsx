@@ -14,11 +14,12 @@ export default function PromptLine({ cmd, variant = "section", className }: Prom
   const vars: CSSVars = { "--n": cmd.length };
 
   return (
-    <p className={classes} aria-hidden="true" data-cmd={variant === "section" ? "" : undefined}>
+    // --n은 .cmd 형제인 .caret 애니메이션 길이에도 쓰이므로 부모에 둔다
+    <p className={classes} style={vars} aria-hidden="true" data-cmd={variant === "section" ? "" : undefined}>
       <span className="ps1">
         <Glyph name="prompt" />
       </span>{" "}
-      <span className="cmd" style={vars}>
+      <span className="cmd">
         {cmd}
       </span>
       <span className="caret" />
