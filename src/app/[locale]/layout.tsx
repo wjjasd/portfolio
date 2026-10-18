@@ -1,15 +1,23 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import JsonLd from "@/components/JsonLd";
+import TerminalRuntime from "@/components/terminal/TerminalRuntime";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+
+// 첫 페인트 전에 터미널 재생 여부 결정 (ADR ③-4). 속성이 없으면 정적 완성 화면
+const TERM_BOOT = `(function(){try{var d=document.documentElement;if(!sessionStorage.getItem("kj-term")&&matchMedia("(prefers-reduced-motion: no-preference)").matches){sessionStorage.setItem("kj-term","1");d.setAttribute("data-term","play")}}catch(e){}})()`;
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -62,12 +70,16 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100">
+    <html lang={locale} className={`${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: TERM_BOOT }} />
+      </head>
+      <body className="min-h-full flex flex-col bg-bg text-fg font-mono">
         <NextIntlClientProvider messages={messages}>
           <JsonLd locale={locale} />
           {children}
         </NextIntlClientProvider>
+        <TerminalRuntime />
       </body>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}

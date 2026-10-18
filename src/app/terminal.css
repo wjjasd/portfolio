@@ -1,0 +1,295 @@
+/*
+  터미널 프리미티브 스타일 (src/components/terminal/*)
+  - 기본 상태(html에 data-term 없음) = 완성된 정적 화면
+  - 숨김·재생 규칙은 전부 html[data-term="play"] 아래에만 둔다 (ADR ③-4)
+*/
+
+:root {
+  --type-char: 26ms;
+  --type-char-hero: 75ms;
+}
+
+@layer components {
+  .glyph {
+    display: inline-block;
+    flex: none;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+  }
+
+  /* PromptLine */
+  .prompt {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-fg);
+    white-space: nowrap;
+  }
+  .ps1 {
+    color: var(--color-accent);
+  }
+  .cmd {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .caret {
+    display: none;
+    width: 0.55em;
+    height: 1.1em;
+    margin-left: 2px;
+    background: var(--color-fg);
+    vertical-align: -0.18em;
+  }
+  .sec-title {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 700;
+    color: var(--color-fg-strong);
+  }
+  @media (min-width: 768px) {
+    .prompt {
+      font-size: 1.25rem;
+    }
+    .sec-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* OutputBlock */
+  .out {
+    margin-top: 1.5rem;
+  }
+  .out > * + * {
+    margin-top: 1rem;
+  }
+  .out p {
+    max-width: 68ch;
+  }
+
+  /* Spinner */
+  .spin {
+    color: var(--color-fg-muted);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .spin-intro {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+  .frames {
+    position: relative;
+    display: inline-block;
+    width: 1.2ch;
+    height: 1em;
+    vertical-align: -0.12em;
+    color: var(--color-accent);
+  }
+  .frames > span {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    visibility: hidden;
+    animation: term-frame var(--spin-cycle, 600ms) linear
+      calc(var(--spin-start, 0ms) + var(--f) * var(--spin-cycle, 600ms) / 10)
+      var(--spin-iter, infinite);
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-fg-muted) 0%,
+      var(--color-fg-muted) 35%,
+      var(--color-fg-strong) 50%,
+      var(--color-fg-muted) 65%,
+      var(--color-fg-muted) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: term-shimmer 900ms linear infinite;
+  }
+
+  /* ToolCallHeader */
+  .toolcall {
+    display: flex;
+    align-items: baseline;
+    column-gap: 1ch;
+    min-width: 0;
+  }
+  .toolcall .dot {
+    flex: none;
+    color: var(--color-fg-muted);
+  }
+  .toolcall[data-state="pending"] .dot {
+    animation: term-blink 800ms steps(1) infinite;
+  }
+  .toolcall[data-state="ok"] .dot {
+    color: var(--color-success);
+  }
+  .toolcall[data-state="fail"] .dot {
+    color: var(--color-error);
+  }
+  .tc-call {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tc-name {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .tc-arg {
+    color: var(--color-fg-muted);
+  }
+  .tc-result {
+    display: flex;
+    align-items: baseline;
+    gap: 1ch;
+    padding-left: 2ch;
+    font-size: 0.875rem;
+    color: var(--color-fg-muted);
+  }
+  .tc-result .elbow {
+    color: var(--color-fg-dim);
+  }
+
+  /* Checklist */
+  .check li {
+    display: grid;
+    grid-template-columns: 2ch 1fr;
+    column-gap: 1ch;
+    padding: 2px 0;
+    font-size: 0.9375rem;
+  }
+  .check .box {
+    color: var(--color-fg-dim);
+  }
+  .check [data-status="done"] .box {
+    color: var(--color-success);
+  }
+  .check [data-status="doing"] {
+    color: var(--color-fg-strong);
+    font-weight: 600;
+  }
+  .check [data-status="doing"] .box {
+    color: var(--color-accent);
+  }
+  .check [data-status="todo"] {
+    color: var(--color-fg-dim);
+  }
+
+  /* DiffBlock */
+  .diff {
+    font-size: 0.875rem;
+    border-left: 2px solid var(--color-line-strong);
+    padding: 2px 0 2px 12px;
+  }
+  .diff .del {
+    color: var(--color-error);
+  }
+  .diff .add {
+    color: var(--color-success);
+  }
+}
+
+/* ===== PLAY 모드 (세션 첫 진입 + reduced-motion 아님) =====
+   Hero 타임라인: 0.15–0.60s whoami 타이핑 · 0.60–1.20s 스피너 · 1.20–1.90s 출력 stagger */
+html[data-term="play"] .prompt-hero .cmd {
+  width: 0;
+  animation: term-type calc(var(--n) * var(--type-char-hero)) steps(var(--n), end) 150ms forwards;
+}
+html[data-term="play"] .prompt-hero .caret {
+  display: inline-block;
+  animation: term-caret-off 600ms steps(1, end) forwards;
+}
+html[data-term="play"] .spin-intro {
+  display: block;
+  opacity: 0;
+  animation: term-spin-window 1200ms steps(1, end) forwards;
+}
+html[data-term="play"] [data-reveal] {
+  opacity: 0;
+  animation: term-reveal 300ms ease-out calc(1200ms + var(--i) * 80ms) forwards;
+}
+
+/* 섹션 명령 — TerminalRuntime이 data-typed를 pending → run 으로 바꾼다 */
+html[data-term="play"] .prompt[data-typed="pending"] .cmd {
+  width: 0;
+}
+html[data-term="play"] .prompt[data-typed="run"] .cmd {
+  width: 0;
+  animation: term-type calc(var(--n) * var(--type-char)) steps(var(--n), end) forwards;
+}
+html[data-term="play"] .prompt[data-typed="run"] .caret {
+  display: inline-block;
+  animation: term-caret-off calc(var(--n) * var(--type-char) + 160ms) steps(1, end) forwards;
+}
+
+@keyframes term-type {
+  from { width: 0; }
+  to { width: calc(var(--n) * 1ch); }
+}
+@keyframes term-caret-off {
+  from { visibility: visible; }
+  to { visibility: hidden; }
+}
+@keyframes term-spin-window {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes term-reveal {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes term-frame {
+  0% { visibility: visible; }
+  10% { visibility: hidden; }
+  100% { visibility: hidden; }
+}
+@keyframes term-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+@keyframes term-blink {
+  50% { opacity: 0; }
+}
+
+/* 이중 안전장치 (ADR ③-8): reduced-motion이면 play여도 최종 상태 */
+@media (prefers-reduced-motion: reduce) {
+  .cmd,
+  .caret,
+  .spin,
+  .frames > span,
+  .shimmer,
+  .toolcall .dot,
+  [data-reveal] {
+    animation: none !important;
+  }
+  html[data-term="play"] .cmd {
+    width: auto !important;
+  }
+  html[data-term="play"] [data-reveal] {
+    opacity: 1 !important;
+  }
+  .spin-intro,
+  .caret {
+    display: none !important;
+  }
+  .frames > span:first-child {
+    visibility: visible;
+  }
+  .shimmer {
+    color: var(--color-fg-muted);
+    background: none;
+  }
+}
