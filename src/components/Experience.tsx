@@ -35,7 +35,7 @@ export default async function Experience() {
                     <span aria-hidden="true">)</span>
                   </span>
                 )}
-                <h3 className="co">{exp.company}</h3>
+                <h3 className="co">{exp[lang].company}</h3>
               </div>
               <p className="c-meta">
                 {formatYearMonth(exp.start)} – {exp.end ? formatYearMonth(exp.end) : t('present')} · {exp[lang].role}

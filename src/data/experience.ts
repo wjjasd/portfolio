@@ -1,4 +1,5 @@
 export interface ExperienceI18n {
+  company: string
   role: string
   tasks: string[]
 }
@@ -9,7 +10,6 @@ export interface YearMonth {
 }
 
 export interface Experience {
-  company: string
   /** git log 장식용 해시 (aria-hidden) */
   hash: string
   ko: ExperienceI18n
@@ -29,9 +29,9 @@ export interface Education {
 
 export const experiences: Experience[] = [
   {
-    company: '유타렉스 (UTAREX)',
     hash: '3f9a2c1',
     ko: {
+      company: '유타렉스 (UTAREX)',
       role: 'Android 개발 / 임베디드 / 웹 프론트엔드 / 클라우드 설계',
       tasks: [
         'IoT 통합 관제 시스템 설계·구현 (GS25 편의점 실증, 정부과제 납품)',
@@ -44,6 +44,7 @@ export const experiences: Experience[] = [
       ],
     },
     en: {
+      company: 'UTAREX',
       role: 'Android / Embedded / Web Frontend / Cloud Architecture',
       tasks: [
         'IoT integrated control system design and implementation (GS25 pilot, government-funded)',
@@ -59,9 +60,9 @@ export const experiences: Experience[] = [
     start: { year: 2024, month: 2 },
   },
   {
-    company: '홀리츠 (Holich)',
     hash: '8b41d07',
     ko: {
+      company: '홀리츠 (Holich)',
       role: 'Android 개발',
       tasks: [
         '호텔 종합 솔루션 MyCONECT Android 앱 기능 개발·유지보수',
@@ -71,6 +72,7 @@ export const experiences: Experience[] = [
       ],
     },
     en: {
+      company: 'Holich',
       role: 'Android Development',
       tasks: [
         'Feature development and maintenance for hotel solution MyCONECT Android app',

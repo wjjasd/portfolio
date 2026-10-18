@@ -1,10 +1,15 @@
-import BlogCards from './BlogCards'
+import { getTranslations } from 'next-intl/server'
+import TerminalSection from '@/components/terminal/TerminalSection'
+import { CMD } from '@/components/terminal/commands'
 
-export interface BlogPost {
+const BLOG_URL = 'https://dev-yangkj.tistory.com/'
+const POST_COUNT = 5
+
+interface BlogPost {
   title: string
   link: string
-  pubDate: string
-  thumbnail: string | null
+  /** YYYY-MM-DD (KST) */
+  date: string
 }
 
 function extractTag(xml: string, tag: string): string {
@@ -13,19 +18,12 @@ function extractTag(xml: string, tag: string): string {
   return m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim()
 }
 
-function decodeHtmlEntities(str: string): string {
-  return str
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, '&')
-}
+// 서버 시간대와 무관하게 글 작성 기준(KST) 날짜로 표기
+const kstDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' })
 
-function extractFirstImageSrc(html: string): string | null {
-  const decoded = decodeHtmlEntities(html)
-  const m = decoded.match(/<img[^>]+?src=["']([^"']+)["']/i)
-  return m ? m[1] : null
+function toDate(pubDate: string): string {
+  const d = new Date(pubDate)
+  return Number.isNaN(d.getTime()) ? '' : kstDate.format(d)
 }
 
 async function fetchBlogPosts(): Promise<BlogPost[]> {
@@ -37,11 +35,10 @@ async function fetchBlogPosts(): Promise<BlogPost[]> {
     const xml = await res.text()
 
     const itemMatches = xml.match(/<item>([\s\S]*?)<\/item>/g) ?? []
-    return itemMatches.slice(0, 3).map((item) => ({
+    return itemMatches.slice(0, POST_COUNT).map((item) => ({
       title: extractTag(item, 'title'),
       link: extractTag(item, 'link'),
-      pubDate: extractTag(item, 'pubDate'),
-      thumbnail: extractFirstImageSrc(extractTag(item, 'description')),
+      date: toDate(extractTag(item, 'pubDate')),
     }))
   } catch {
     return []
@@ -49,13 +46,31 @@ async function fetchBlogPosts(): Promise<BlogPost[]> {
 }
 
 export default async function Blog() {
-  const posts = await fetchBlogPosts()
-  if (posts.length === 0) return null
+  const [posts, t] = await Promise.all([fetchBlogPosts(), getTranslations('blog')])
+
   return (
-    <section id="blog" className="px-6 border-t border-white/5">
-      <div className="max-w-6xl mx-auto w-full py-24">
-        <BlogCards posts={posts} />
+    <TerminalSection id="blog" cmd={CMD.blog} title={t('title')}>
+      <div className="out">
+        {posts.length > 0 ? (
+          <ul className="feed">
+            {posts.map((post) => (
+              <li key={post.link}>
+                <time dateTime={post.date}>{post.date}</time>
+                <a href={post.link} target="_blank" rel="noopener noreferrer">
+                  {post.title} <span className="arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-fg-muted">{t('empty')}</p>
+        )}
+        <p>
+          <a className="link text-fg-muted" href={BLOG_URL} target="_blank" rel="noopener noreferrer">
+            {t('view_all')} <span aria-hidden="true">↗</span>
+          </a>
+        </p>
       </div>
-    </section>
+    </TerminalSection>
   )
 }

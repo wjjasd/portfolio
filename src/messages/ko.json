@@ -42,12 +42,28 @@
     "close": "닫기"
   },
   "projects": {
-    "section_label": "Projects",
     "title": "프로젝트",
-    "live_demo": "현재 보고 계시는 웹사이트가 라이브 데모입니다",
-    "image_button": "이미지 보기 ({count})",
-    "demo_video": "데모 영상",
-    "thumbnail_alt": "썸네일"
+    "index_label": "프로젝트 목록",
+    "open": "자세히 보기",
+    "close": "닫기",
+    "contribution": "기여 {n}%",
+    "diff_label": "개선 지표",
+    "tags_label": "기술 스택",
+    "media_count": "{images, plural, =0 {} other {이미지 #}}{videos, plural, =0 {} other { · 영상 #}}",
+    "status_live": "운영 중",
+    "status_internal": "사내 사용 중",
+    "status_delivered": "납품 완료",
+    "status_released": "배포 완료",
+    "status_ended": "서비스 종료",
+    "status_here": "you are here",
+    "m_background": "배경",
+    "m_roles": "나의 역할과 기여",
+    "m_results": "정량 성과",
+    "m_stack": "기술 스택",
+    "m_media": "미디어",
+    "m_links": "링크",
+    "g_prev": "이전 미디어",
+    "g_next": "다음 미디어"
   },
   "skills": {
     "title": "기술 스택",
@@ -66,42 +82,38 @@
     "edu_sr": "교육 이력:"
   },
   "blog": {
-    "section_label": "Blog",
-    "title": "블로그",
-    "view_all": "블로그 전체 보기"
+    "title": "최근 블로그 글",
+    "view_all": "블로그 전체 보기",
+    "empty": "지금은 RSS를 불러오지 못했습니다."
   },
   "contact": {
-    "section_label": "Contact",
     "title": "연락하기",
     "subtitle": "궁금한 점이 있으시면 편하게 연락주세요.",
-    "email_label": "이메일",
-    "linkedin_label": "LinkedIn",
     "linkedin_display": "LinkedIn 프로필",
-    "blog_label": "블로그",
+    "form_title": "메시지 보내기",
     "form_name": "이름",
     "form_name_placeholder": "홍길동",
     "form_email": "이메일",
     "form_message": "메시지",
     "form_message_placeholder": "안녕하세요, 궁금한 점이 있어서 연락드립니다...",
     "form_submit": "메시지 보내기",
-    "form_submitting": "전송 중...",
-    "form_success": "메시지가 전송되었습니다.",
+    "form_hint": "답장은 이메일로 드립니다",
+    "form_submitting": "전송 중",
+    "form_success": "메시지가 전송되었습니다. 답장은 이메일로 드릴게요.",
     "form_error": "전송에 실패했습니다. 다시 시도해주세요."
   },
-  "gallery": {
-    "close": "닫기",
-    "prev": "이전",
-    "next": "다음",
-    "dot_label": "{index}번째 이미지"
-  },
   "github": {
-    "section_label": "GitHub",
     "title": "GitHub 기여",
-    "subtitle": "지난 1년간의 커밋 활동",
-    "total": "{count}개 기여",
-    "tooltip": "{date}: {count}회"
+    "summary": "지난 1년간 <b>{count}</b>개 기여",
+    "heat_label": "지난 1년 GitHub 기여 히트맵, 총 {count}개",
+    "unavailable": "지금은 기여 데이터를 불러오지 못했습니다."
   },
   "terminal": {
-    "welcome": "kjyang.kro.kr 에 오신 것을 환영합니다"
+    "welcome": "kjyang.kro.kr 에 오신 것을 환영합니다",
+    "status_done": "완료:",
+    "status_in_progress": "진행 중:",
+    "status_todo": "분담:",
+    "diff_before": "개선 전:",
+    "diff_after": "개선 후:"
   }
 }

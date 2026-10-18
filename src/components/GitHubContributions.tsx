@@ -1,84 +1,103 @@
-'use client'
+import { getTranslations } from 'next-intl/server'
+import TerminalSection from '@/components/terminal/TerminalSection'
+import { CMD } from '@/components/terminal/commands'
 
-import { useEffect, useState } from 'react'
-import { useTranslations } from 'next-intl'
-import FadeIn from './FadeIn'
+const LEVEL = {
+  NONE: 0,
+  FIRST_QUARTILE: 1,
+  SECOND_QUARTILE: 2,
+  THIRD_QUARTILE: 3,
+  FOURTH_QUARTILE: 4,
+} as const
 
-interface ContributionDay {
-  contributionCount: number
-  date: string
-  color: string
-}
+type ContributionLevel = keyof typeof LEVEL
 
-interface ContributionWeek {
-  contributionDays: ContributionDay[]
-}
-
-interface GitHubCalendarData {
+interface Calendar {
   totalContributions: number
-  weeks: ContributionWeek[]
+  weeks: { contributionDays: { weekday: number; contributionLevel: ContributionLevel }[] }[]
 }
 
-function DayCell({ day }: { day: ContributionDay }) {
-  const isEmpty = day.contributionCount === 0 || day.color === '#ebedf0'
+const QUERY = `{
+  user(login: "wjjasd") {
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks { contributionDays { weekday contributionLevel } }
+      }
+    }
+  }
+}`
+
+async function fetchCalendar(): Promise<Calendar | null> {
+  const token = process.env.GITHUB_TOKEN
+  if (!token) return null
+  try {
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: QUERY }),
+      next: { revalidate: 86400 },
+    })
+    if (!res.ok) return null
+    const json: { data?: { user?: { contributionsCollection?: { contributionCalendar?: Calendar } } }; errors?: unknown } =
+      await res.json()
+    // GraphQL은 에러가 있어도 200을 준다
+    if (json.errors) return null
+    return json.data?.user?.contributionsCollection?.contributionCalendar ?? null
+  } catch {
+    return null
+  }
+}
+
+const CELL = 10
+
+// 단계별 <path> 하나로 그린다(셀마다 노드를 만들지 않음 → DOM 364개 절약).
+// 8×8 사각형 + 같은 색 2px 둥근 stroke = 모서리가 둥근 10×10 셀
+function Heatmap({ weeks, gap, className }: { weeks: Calendar['weeks']; gap: number; className: string }) {
+  const pitch = CELL + gap
+  const paths: string[] = ['', '', '', '', '']
+  weeks.forEach((week, w) => {
+    for (const day of week.contributionDays) {
+      paths[LEVEL[day.contributionLevel] ?? 0] += `M${w * pitch + 1} ${day.weekday * pitch + 1}h8v8h-8z`
+    }
+  })
+  const width = weeks.length * pitch - gap
+  const height = 7 * pitch - gap
+
   return (
-    <div
-      title={`${day.date}: ${day.contributionCount}`}
-      className={`w-[10px] h-[10px] rounded-sm cursor-default ${isEmpty ? 'bg-zinc-800' : ''}`}
-      style={isEmpty ? undefined : { backgroundColor: day.color }}
-    />
+    <svg className={className} width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
+      {paths.map((d, level) => (d ? <path key={level} d={d} className={`lvl-${level}`} /> : null))}
+    </svg>
   )
 }
 
-export default function GitHubContributions() {
-  const t = useTranslations('github')
-  const [data, setData] = useState<GitHubCalendarData | null>(null)
-
-  useEffect(() => {
-    fetch('/api/github-contributions')
-      .then((r) => r.ok ? r.json() : null)
-      .then((json) => setData(json))
-      .catch(() => null)
-  }, [])
-
-  if (!data) return null
+export default async function GitHubContributions() {
+  const [data, t] = await Promise.all([fetchCalendar(), getTranslations('github')])
 
   return (
-    <section id="github" className="px-6 border-t border-white/5">
-      <div className="max-w-6xl mx-auto w-full py-24">
-        <FadeIn>
-          <p className="text-indigo-400 text-sm font-medium tracking-widest uppercase mb-4">
-            {t('section_label')}
-          </p>
-          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4 mb-4">
-            <h2 className="text-4xl font-bold text-white">{t('title')}</h2>
-            <span className="text-indigo-400 text-lg font-medium mt-1 sm:mt-0">
-              {t('total', { count: data.totalContributions })}
-            </span>
-          </div>
-          <p className="text-zinc-400 text-sm mb-8">{t('subtitle')}</p>
-          {/* 모바일: 최근 26주, gap 2px (310px ≤ 327px 가용폭) */}
-          <div className="flex gap-[2px] sm:hidden">
-            {data.weeks.slice(-26).map((week, wi) => (
-              <div key={wi} className="flex flex-col gap-[2px]">
-                {week.contributionDays.map((day) => (
-                  <DayCell key={day.date} day={day} />
-                ))}
-              </div>
-            ))}
-          </div>
-          {/* sm 이상: 전체 52주 */}
-          <div className="hidden sm:flex gap-[3px] overflow-x-auto pb-2">
-            {data.weeks.map((week, wi) => (
-              <div key={wi} className="flex flex-col gap-[3px]">
-                {week.contributionDays.map((day) => (
-                  <DayCell key={day.date} day={day} />
-                ))}
-              </div>
-            ))}
-          </div>
-        </FadeIn>
+    <TerminalSection id="github" cmd={CMD.github} title={t('title')}>
+      <div className="out">
+        {data ? (
+          <>
+            <p>{t.rich('summary', { count: data.totalContributions, b: (c) => <b className="text-fg-strong">{c}</b> })}</p>
+            <div className="heat" role="img" aria-label={t('heat_label', { count: data.totalContributions })}>
+              <Heatmap weeks={data.weeks.slice(-26)} gap={2} className="sm:hidden" />
+              <Heatmap weeks={data.weeks} gap={3} className="hidden sm:block" />
+            </div>
+            <p className="heat-legend" aria-hidden="true">
+              less <i className="lvl-0" /> <i className="lvl-1" /> <i className="lvl-2" /> <i className="lvl-3" />{' '}
+              <i className="lvl-4" /> more
+            </p>
+          </>
+        ) : (
+          <p className="text-fg-muted">{t('unavailable')}</p>
+        )}
+        <p>
+          <a className="link text-fg-muted" href="https://github.com/wjjasd" target="_blank" rel="noopener noreferrer">
+            github.com/wjjasd <span aria-hidden="true">↗</span>
+          </a>
+        </p>
       </div>
-    </section>
+    </TerminalSection>
   )
 }

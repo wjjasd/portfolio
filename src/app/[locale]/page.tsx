@@ -8,6 +8,7 @@ import Experience from "@/components/Experience";
 import GitHubContributions from "@/components/GitHubContributions";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -27,6 +28,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <Blog />
         <Contact />
       </main>
+      <Footer />
     </>
   );
 }

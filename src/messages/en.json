@@ -42,12 +42,28 @@
     "close": "Close"
   },
   "projects": {
-    "section_label": "Projects",
     "title": "Projects",
-    "live_demo": "The website you are viewing right now is the live demo.",
-    "image_button": "Images ({count})",
-    "demo_video": "Demo Video",
-    "thumbnail_alt": "thumbnail"
+    "index_label": "Project list",
+    "open": "View details",
+    "close": "Close",
+    "contribution": "{n}% contribution",
+    "diff_label": "Improvement metrics",
+    "tags_label": "Tech stack",
+    "media_count": "{images, plural, =0 {} one {# image} other {# images}}{videos, plural, =0 {} one { · # video} other { · # videos}}",
+    "status_live": "Live",
+    "status_internal": "In use internally",
+    "status_delivered": "Delivered",
+    "status_released": "Released",
+    "status_ended": "Discontinued",
+    "status_here": "you are here",
+    "m_background": "Background",
+    "m_roles": "My role & contributions",
+    "m_results": "Results",
+    "m_stack": "Tech stack",
+    "m_media": "Media",
+    "m_links": "Links",
+    "g_prev": "Previous media",
+    "g_next": "Next media"
   },
   "skills": {
     "title": "Tech Stack",
@@ -66,42 +82,38 @@
     "edu_sr": "Education:"
   },
   "blog": {
-    "section_label": "Blog",
-    "title": "Blog",
-    "view_all": "View All Posts"
+    "title": "Latest Blog Posts",
+    "view_all": "View all posts",
+    "empty": "Could not load the RSS feed right now."
   },
   "contact": {
-    "section_label": "Contact",
     "title": "Get in Touch",
     "subtitle": "Feel free to reach out if you have any questions.",
-    "email_label": "Email",
-    "linkedin_label": "LinkedIn",
-    "linkedin_display": "LinkedIn Profile",
-    "blog_label": "Blog",
+    "linkedin_display": "LinkedIn profile",
+    "form_title": "Send a message",
     "form_name": "Name",
     "form_name_placeholder": "John Doe",
     "form_email": "Email",
     "form_message": "Message",
     "form_message_placeholder": "Hi, I have a question...",
-    "form_submit": "Send Message",
-    "form_submitting": "Sending...",
-    "form_success": "Your message has been sent.",
+    "form_submit": "Send message",
+    "form_hint": "I'll reply by email",
+    "form_submitting": "Sending",
+    "form_success": "Your message has been sent. I'll get back to you by email.",
     "form_error": "Failed to send. Please try again."
   },
-  "gallery": {
-    "close": "Close",
-    "prev": "Previous",
-    "next": "Next",
-    "dot_label": "Image {index}"
-  },
   "github": {
-    "section_label": "GitHub",
     "title": "GitHub Contributions",
-    "subtitle": "Commit activity over the past year",
-    "total": "{count} contributions",
-    "tooltip": "{date}: {count} commits"
+    "summary": "<b>{count}</b> contributions in the last year",
+    "heat_label": "GitHub contribution heatmap for the last year, {count} total",
+    "unavailable": "Could not load contribution data right now."
   },
   "terminal": {
-    "welcome": "Welcome to kjyang.kro.kr"
+    "welcome": "Welcome to kjyang.kro.kr",
+    "status_done": "Done:",
+    "status_in_progress": "In progress:",
+    "status_todo": "Shared:",
+    "diff_before": "Before:",
+    "diff_after": "After:"
   }
 }
