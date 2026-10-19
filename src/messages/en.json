@@ -22,9 +22,9 @@
       "cert_k": "Cert",
       "cert_v": "Engineer Information Processing (2019.11)"
     },
-    "story1": "It started in 2017, when I built an order-recording app while waiting tables.",
+    "story1": "Since building an order-tracking app while waiting tables in 2017, I have been solving real-world problems with software.",
     "story2": "Today I build RK3588-based Android/Linux gateways and carry Modbus, BLE, and Sub-G sensor data all the way to a cloud monitoring platform.",
-    "story3": "A feature working isn't the finish line for me — I stay on it until the problem is reliably solved in the field.",
+    "story3": "A working feature isn't the finish line — I own it until it runs reliably in production.",
     "profile_zoom": "View profile photo",
     "profile_caption": "KiJeong Yang · Product Engineer",
     "close": "Close",
