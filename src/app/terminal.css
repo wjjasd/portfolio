@@ -550,6 +550,26 @@ html[data-term="play"] .prompt[data-typed="run"] .caret {
   animation: term-caret-off calc(var(--n) * var(--type-char) + 160ms) steps(1, end) forwards;
 }
 
+/* 섹션 출력 — 명령 타이핑이 끝난 뒤 블록 단위로 등장. --n은 TerminalSection 컨테이너가 준다.
+   Projects는 .cards 대신 카드 하나하나가 단위. --k 0~5 (6번째부터는 동시) × 60ms + 200ms ≤ 0.5s */
+html[data-term="play"] .prompt[data-typed="pending"] ~ .out > :not(.cards),
+html[data-term="play"] .prompt[data-typed="pending"] ~ .out > .cards > * {
+  opacity: 0;
+}
+html[data-term="play"] .prompt[data-typed="run"] ~ .out > :not(.cards),
+html[data-term="play"] .prompt[data-typed="run"] ~ .out > .cards > * {
+  animation: term-reveal 200ms ease-out calc(var(--n) * var(--type-char) + var(--k, 0) * 60ms) both;
+}
+html[data-term="play"] .prompt[data-typed] ~ .out > :nth-child(2) { --k: 1; }
+html[data-term="play"] .prompt[data-typed] ~ .out > :nth-child(3) { --k: 2; }
+html[data-term="play"] .prompt[data-typed] ~ .out > :nth-child(4) { --k: 3; }
+html[data-term="play"] .prompt[data-typed] ~ .out > :nth-child(5) { --k: 4; }
+html[data-term="play"] .prompt[data-typed] ~ .out > :nth-child(n + 6) { --k: 5; }
+html[data-term="play"] .prompt[data-typed] ~ .out > .cards > :nth-child(1) { --k: 2; }
+html[data-term="play"] .prompt[data-typed] ~ .out > .cards > :nth-child(2) { --k: 3; }
+html[data-term="play"] .prompt[data-typed] ~ .out > .cards > :nth-child(3) { --k: 4; }
+html[data-term="play"] .prompt[data-typed] ~ .out > .cards > :nth-child(n + 4) { --k: 5; }
+
 @keyframes term-type {
   from { width: 0; }
   to { width: calc(var(--n) * 1ch); }
@@ -588,13 +608,17 @@ html[data-term="play"] .prompt[data-typed="run"] .caret {
   .frames > span,
   .shimmer,
   .toolcall .dot,
-  [data-reveal] {
+  [data-reveal],
+  .prompt[data-typed] ~ .out > *,
+  .prompt[data-typed] ~ .out > .cards > * {
     animation: none !important;
   }
   html[data-term="play"] .cmd {
     width: auto !important;
   }
-  html[data-term="play"] [data-reveal] {
+  html[data-term="play"] [data-reveal],
+  html[data-term="play"] .prompt[data-typed] ~ .out > *,
+  html[data-term="play"] .prompt[data-typed] ~ .out > .cards > * {
     opacity: 1 !important;
   }
   .spin-intro,

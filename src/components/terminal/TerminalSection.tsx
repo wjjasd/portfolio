@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import PromptLine from "./PromptLine";
 import type { Command } from "./commands";
+import type { CSSVars } from "./cssVars";
 
 interface TerminalSectionProps {
   id: string;
@@ -13,10 +14,12 @@ interface TerminalSectionProps {
 
 export default function TerminalSection({ id, cmd, title, children, className }: TerminalSectionProps) {
   const titleId = `${id}-title`;
+  const vars: CSSVars = { "--n": cmd.length };
 
   return (
     <section id={id} aria-labelledby={titleId} className={`py-12 md:py-[72px] ${className ?? ""}`}>
-      <div className="mx-auto max-w-[1040px] px-4 md:px-8">
+      {/* --n: 형제 .out 등장 지연(타이핑 시간)을 계산하려면 prompt 밖에서도 읽혀야 한다 */}
+      <div className="mx-auto max-w-[1040px] px-4 md:px-8" style={vars}>
         <PromptLine cmd={cmd} />
         <h2 id={titleId} className="sec-title">
           {title}
