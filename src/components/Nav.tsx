@@ -7,7 +7,6 @@ import { routing } from '@/i18n/routing'
 
 // 링크 라벨·경로는 터미널 디렉토리명이라 번역하지 않는다 (ADR ④)
 const SECTIONS = [
-  { id: 'about', dir: 'about' },
   { id: 'projects', dir: 'projects' },
   { id: 'skills', dir: 'skills' },
   { id: 'experience', dir: 'career' },

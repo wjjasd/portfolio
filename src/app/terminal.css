@@ -210,6 +210,27 @@
     font-weight: 700;
   }
 
+  /* Hero 스토리 — facts 다음 출력. reduced-motion이면 첫 페인트부터 보이므로 문단 하나가 tagline보다 작아야 한다 (ADR ③-2) */
+  .story {
+    margin-top: 1.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+  @media (min-width: 768px) {
+    .story {
+      font-size: 0.875rem;
+    }
+  }
+  .story p {
+    max-width: 68ch;
+  }
+  .story p + p {
+    margin-top: 0.5rem;
+  }
+  .story p:first-child {
+    color: var(--color-fg-strong);
+  }
+
   /* SelectMenu — 기본은 1번에 ❯, hover/focus한 항목으로 이동 */
   .menu {
     margin-top: 1.5rem;
@@ -269,24 +290,10 @@
     }
   }
 
-  /* About — cat ~/.profile */
-  .profile {
-    display: grid;
-    gap: 1.5rem;
-  }
-  .out.profile > * + * {
-    margin-top: 0;
-  }
-  @media (min-width: 768px) {
-    .profile {
-      grid-template-columns: 168px 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-  }
+  /* Hero 프로필 사진 — Welcome 박스 안, tagline보다 작은 면적 유지 */
   .avatar {
     display: block;
-    width: 120px;
+    width: 80px;
     aspect-ratio: 1;
     overflow: hidden;
     border: 1px solid var(--color-line-strong);
@@ -300,7 +307,7 @@
   }
   @media (min-width: 768px) {
     .avatar {
-      width: 168px;
+      width: 152px;
     }
   }
   .kv {
@@ -316,16 +323,6 @@
   }
   .kv dd {
     color: var(--color-fg);
-  }
-  .about-body p {
-    max-width: 68ch;
-  }
-  .about-body p + p {
-    margin-top: 0.75rem;
-  }
-  .about-body .lead {
-    color: var(--color-fg-strong);
-    font-weight: 600;
   }
 
   /* Skills — ls skills/* */

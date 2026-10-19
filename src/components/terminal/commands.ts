@@ -18,7 +18,6 @@ const checked = <const T extends Record<string, string>>(table: T & Checked<T>):
 
 export const CMD = checked({
   hero: "whoami",
-  about: "cat ~/.profile",
   projects: "ls projects/",
   skills: "ls skills/",
   experience: "git log --graph career",

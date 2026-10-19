@@ -18,28 +18,22 @@
       "impact_k": "개선",
       "impact_v": "데이터 누락률 <muted>4.0%</muted> → <ok>0%</ok>",
       "ops_k": "운영",
-      "ops_v": "MCP 서버 <b>26 tools · 166 세션</b>"
+      "ops_v": "MCP 서버 <b>26 tools · 166 세션</b>",
+      "cert_k": "자격",
+      "cert_v": "정보처리기사 (2019.11)"
     },
+    "story1": "2017년 서빙 일을 하다 주문을 기록하는 앱을 직접 만든 것이 개발의 시작이었습니다.",
+    "story2": "지금은 RK3588 기반 Android·Linux 게이트웨이를 만들고, Modbus·BLE·Sub-G 센서 데이터를 클라우드 관제 플랫폼까지 잇고 있습니다.",
+    "story3": "기능이 돌아가는 데서 멈추지 않고, 실제 현장에서 문제가 안정적으로 해결될 때까지 붙잡습니다.",
+    "profile_zoom": "프로필 사진 크게 보기",
+    "profile_caption": "양기정 · Product Engineer",
+    "close": "닫기",
     "menu_label": "바로가기",
     "menu_q": "무엇을 먼저 보시겠어요?",
     "cta_projects": "프로젝트 보기",
     "cta_contact": "연락하기",
     "menu_hint": "숫자키 1–3 또는 클릭",
     "new_tab": "(새 탭)"
-  },
-  "about": {
-    "title": "자기소개",
-    "name": "양기정",
-    "role": "Product Engineer",
-    "cert": "정보처리기사 (2019.11)",
-    "focus": "Android · 임베디드 · 웹 · 백엔드/인프라 · 자동화",
-    "p1": "아이디어를 실제 제품으로 바꾸는 일을 합니다.",
-    "p2": "2017년 서빙 업무 중 주문 기록 앱을 만든 것을 시작으로, Android, AOSP, 임베디드, 웹, 서버, 배포와 운영까지 제품 개발의 전 과정을 경험해왔습니다.",
-    "p3": "단순히 기능을 구현하는 것을 넘어, 사용자의 문제를 실제 환경에서 안정적으로 해결하는 데 집중합니다.",
-    "p4": "현재는 AIoT 솔루션 기업에서 RK3588 기반 Android·Linux 게이트웨이 개발부터 Modbus·BLE·Sub-G 센서 연동, 클라우드 관제 플랫폼 연계까지 IoT 제품 개발 전반을 담당하고 있습니다.",
-    "profile_zoom": "프로필 사진 크게 보기",
-    "profile_caption": "양기정 · Product Engineer",
-    "close": "닫기"
   },
   "projects": {
     "title": "프로젝트",

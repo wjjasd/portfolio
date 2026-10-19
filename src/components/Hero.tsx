@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
+import ImageDialog from '@/components/ImageDialog'
 import Glyph from '@/components/terminal/Glyph'
 import PromptLine from '@/components/terminal/PromptLine'
 import Spinner from '@/components/terminal/Spinner'
@@ -8,7 +10,8 @@ import { reveal } from '@/components/terminal/OutputBlock'
 import { CMD, SPIN_LABEL } from '@/components/terminal/commands'
 import { experiences, calcTotalMonths } from '@/data/experience'
 
-const FACTS = ['now', 'career', 'proof', 'impact', 'ops'] as const
+const FACTS = ['now', 'career', 'proof', 'impact', 'ops', 'cert'] as const
+const STORY = ['story1', 'story2', 'story3'] as const
 
 const richTags = {
   b: (chunks: ReactNode) => <b>{chunks}</b>,
@@ -40,16 +43,39 @@ export default async function Hero() {
             </span>{' '}
             {tTerm('welcome')}
           </p>
-          <h1 id="hero-name" className="mt-4 leading-[1.1]">
-            <span className="block text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-[-0.02em] text-fg-strong">
-              {t('name')}
-            </span>
-            <span className="mt-3 block text-base font-semibold tracking-[0.02em] text-accent">{t('role')}</span>
-          </h1>
-          <p className="mt-4 max-w-[34ch] text-lg leading-[1.6] text-fg md:max-w-none md:text-[1.375rem]">
-            {t('tagline')}
-          </p>
-          <p className="mt-4 text-sm text-fg-dim">Android · AOSP · IoT · Web</p>
+          {/* 사진은 tagline보다 작게 유지 — LCP 요소가 이미지로 바뀌지 않도록 (ADR ③-2) */}
+          <div className="mt-4 grid grid-cols-[80px_1fr] items-center gap-x-4 md:grid-cols-[152px_1fr] md:gap-x-8">
+            <ImageDialog
+              src="/profile.jpg"
+              alt={t('profile_caption')}
+              width={420}
+              height={525}
+              caption={t('profile_caption')}
+              closeLabel={t('close')}
+              triggerLabel={t('profile_zoom')}
+              triggerClassName="avatar md:row-span-2"
+              dialogClassName="max-w-[420px]"
+            >
+              <Image
+                src="/profile.jpg"
+                alt=""
+                width={152}
+                height={152}
+                sizes="(min-width: 768px) 152px, 80px"
+                loading="eager"
+                className="h-full w-full object-cover"
+              />
+            </ImageDialog>
+            <h1 id="hero-name" className="min-w-0 leading-[1.1]">
+              <span className="block text-[clamp(2.25rem,9vw,4.5rem)] font-bold tracking-[-0.02em] text-fg-strong">
+                {t('name')}
+              </span>
+              <span className="mt-3 block text-base font-semibold tracking-[0.02em] text-accent">{t('role')}</span>
+            </h1>
+            <p className="col-span-2 mt-4 max-w-[34ch] text-lg leading-[1.6] text-fg md:col-span-1 md:col-start-2 md:max-w-none md:text-[1.375rem]">
+              {t('tagline')}
+            </p>
+          </div>
         </div>
 
         <div className="mt-8">
@@ -64,7 +90,15 @@ export default async function Hero() {
             ))}
           </div>
 
-          <nav className="menu" aria-label={t('menu_label')} {...reveal(FACTS.length)}>
+          <div className="story">
+            {STORY.map((key, i) => (
+              <p key={key} {...reveal(FACTS.length + i)}>
+                {t(key)}
+              </p>
+            ))}
+          </div>
+
+          <nav className="menu" aria-label={t('menu_label')} {...reveal(FACTS.length + STORY.length)}>
             <p className="menu-q">{t('menu_q')}</p>
             <ol>
               {menu.map((item, i) => (
