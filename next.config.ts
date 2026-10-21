@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV === "development";
 // - Web3Forms (ContactForm.tsx): 브라우저에서 직접 POST
 // Tistory RSS·GitHub GraphQL은 서버 fetch라 CSP 대상 아님. 폰트는 next/font로 self-host
 const GA_SCRIPT = "https://*.googletagmanager.com";
-const GA_CONNECT = "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com";
+const GA_CONNECT = "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com";
 const GA_IMG = "https://*.google-analytics.com https://*.googletagmanager.com";
 
 const csp = [
