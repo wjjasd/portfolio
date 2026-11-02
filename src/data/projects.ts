@@ -473,6 +473,7 @@ export const projects: Project[] = [
       { type: 'image', src: '/projects/utarex_website/website02.png', alt: { ko: '웹사이트 서비스 섹션', en: 'Website Services Section' } },
       { type: 'image', src: '/projects/utarex_website/website03.png', alt: { ko: '웹사이트 하단', en: 'Website Footer' } },
       { type: 'image', src: '/projects/utarex_website/utarex_web_seo.png', alt: { ko: '구글 검색 최상단 노출 결과', en: 'Google Search #1 Ranking Result' } },
+      { type: 'image', src: '/projects/utarex_website/sales_performance.png', alt: { ko: '웹사이트 문의폼을 통한 실제 고객 문의 유입', en: 'Real Customer Inquiries via Website Contact Form' } },
     ],
     links: [
       { label: { ko: '사이트 방문', en: 'Visit Site' }, url: 'https://utarex.com' },

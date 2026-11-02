@@ -41,6 +41,7 @@
 ## 미디어
 
 - SEO 검색 결과 스크린샷: `screenshot/utarex_web_seo.png`
+- 웹사이트 문의폼 유입 스크린샷 (2026.03~11, 9건): `public/projects/utarex_website/sales_performance.png`
 - 시연 영상 (초기 Node.js 백엔드): https://youtube.com/shorts/9hzoaLreZBA
 
 ## 링크
