@@ -1,8 +1,8 @@
-# Utarex Brain — 사내 AI 비서 MCP 서버
+# 사내 AX — Utarex Brain 지식베이스 + MCP 서버
 
 ## 한 줄 요약
 
-Gitea 지식베이스를 Claude Desktop/Claude Code에 연동하는 사내 AI 비서(동수) MCP 서버 — 26개 tool, 권한 모델, 자립 번들 배포까지 단독 설계·구현
+팀 지식베이스(브레인) 구축부터 Claude 연동 MCP 서버(AI 비서 '동수')까지, 사내 AI 전환(AX)을 단독 추진 — 26개 tool, 권한 모델, 자립 번들 배포
 
 ## 기본 정보
 
@@ -17,10 +17,11 @@ Gitea 지식베이스를 Claude Desktop/Claude Code에 연동하는 사내 AI �
 
 참고 이미지: `gitea_repo.png`, `persona_doc.png`
 
-유타렉스 팀의 프로젝트 현황·의사결정·작업 로그가 Gitea 저장소(plain markdown)에 흩어져 있어, 팀원이 매번 문서를 직접 찾아 읽어야 했다. Claude 안에서 대화만으로 팀 지식베이스를 조회·기록할 수 있는 MCP 서버가 필요했다.
+유타렉스 팀의 프로젝트 현황·의사결정·작업 로그가 여기저기 흩어져 있어, 팀원이 매번 문서를 직접 찾아 읽어야 했다. 업무에 AI를 실제로 녹이는 AX(AI 전환)를 목표로, 먼저 팀 지식을 한곳에 모으는 사내 브레인(Gitea 지식베이스)을 설계하고, Claude 안에서 대화만으로 이를 조회·기록할 수 있는 MCP 서버를 구축했다. 추가 SaaS 없이 Claude Team + Gitea 셀프호스팅만으로 운영한다.
 
 ## 나의 역할과 기여
 
+- 사내 브레인(Gitea 지식베이스) 구조 설계 — 프로젝트별 현황·도메인·의사결정·로그 + 7카테고리 템플릿, 회사 공통 컨벤션
 - MCP(Model Context Protocol) 서버 단독 설계·구현 — 26개 tool (읽기/쓰기) 정의
 - 페르소나·운영 규칙을 코드에 하드코딩하지 않고 Gitea의 `PERSONA.md` 단일 소스에서 매 세션 라이브 로드하는 구조 설계 → 서버 재배포 없이 규칙 갱신 가능
 - `OWNERS.md` 기반 권한 매트릭스 설계 — 쓰기 요청을 PM/구성원·본인 도메인/공유 파일 기준으로 판정해 success / requires_confirmation / denied 3-상태로 반환
@@ -43,6 +44,7 @@ Gitea 지식베이스를 Claude Desktop/Claude Code에 연동하는 사내 AI �
 
 ## 미디어
 
+- 시연 영상: `mcp_demo.mp4`
 - 스크린샷: `gitea_repo.png`(소스 레포), `claude_demo.png`(실사용 데모), `persona_doc.png`(운영 매뉴얼 문서), `usage_stats.png`(사용량 통계)
 
 ## 링크

@@ -70,8 +70,8 @@ export const projects: Project[] = [
     period: '2026.07 – 2026.08',
     contribution: 100,
     ko: {
-      name: 'Utarex Brain — 사내 AI 비서 MCP 서버',
-      oneLiner: '사내 지식베이스를 Claude에 연동하는 MCP 서버 단독 설계·구현, 실사용 중',
+      name: '사내 AX — Utarex Brain 지식베이스 + MCP 서버',
+      oneLiner: '팀 지식베이스(브레인) 구축부터 Claude 연동 MCP 서버까지, 사내 AI 전환(AX)을 단독 추진해 실사용 중',
       org: '유타렉스',
       kpis: [
         { value: '26', label: 'tools' },
@@ -84,8 +84,9 @@ export const projects: Project[] = [
         '.mcpb 자립 번들로 Python 미설치 PC에도 원클릭 배포',
       ],
       background:
-        '유타렉스 팀의 프로젝트 현황·의사결정·작업 로그가 Gitea 저장소(plain markdown)에 흩어져 있어, 팀원이 매번 문서를 직접 찾아 읽어야 했습니다. Claude 안에서 대화만으로 팀 지식베이스를 조회·기록할 수 있는 MCP 서버가 필요했습니다.',
+        '유타렉스 팀의 프로젝트 현황·의사결정·작업 로그가 여기저기 흩어져 있어, 팀원이 매번 문서를 직접 찾아 읽어야 했습니다. 업무에 AI를 실제로 녹이는 AX(AI 전환)를 목표로, 먼저 팀 지식을 한곳에 모으는 사내 브레인(Gitea 지식베이스)을 설계하고, Claude 안에서 대화만으로 이를 조회·기록할 수 있는 MCP 서버를 구축했습니다. 추가 SaaS 없이 Claude Team + Gitea 셀프호스팅만으로 운영합니다.',
       roles: [
+        { status: 'done', text: '사내 브레인(Gitea 지식베이스) 구조 설계 — 프로젝트별 현황·도메인·의사결정·로그 + 7카테고리 템플릿, 회사 공통 컨벤션' },
         { status: 'done', text: 'MCP 서버 단독 설계·구현 — 26개 tool (읽기/쓰기) 정의' },
         { status: 'done', text: 'PERSONA.md 단일 소스를 매 세션 라이브 로드 → 재배포 없이 규칙 갱신' },
         { status: 'done', text: 'OWNERS.md 권한 매트릭스 — success / requires_confirmation / denied 3-상태 판정' },
@@ -101,8 +102,8 @@ export const projects: Project[] = [
       ],
     },
     en: {
-      name: 'Utarex Brain — In-house AI Assistant MCP Server',
-      oneLiner: 'Solo-designed MCP server connecting the company knowledge base to Claude, in active use',
+      name: 'In-house AX — Utarex Brain Knowledge Base + MCP Server',
+      oneLiner: "Solo-led the company's AI transformation (AX), from building the team knowledge base to an MCP server connecting it to Claude, in active use",
       org: 'UTAREX',
       kpis: [
         { value: '26', label: 'tools' },
@@ -115,8 +116,9 @@ export const projects: Project[] = [
         'Self-contained .mcpb bundle for one-click install on PCs without Python',
       ],
       background:
-        "UTAREX's project status, decisions, and work logs were scattered across a Gitea repository (plain markdown), so teammates had to find and read documents by hand every time. The team needed an MCP server that lets them look up and update the knowledge base just by chatting inside Claude.",
+        "UTAREX's project status, decisions, and work logs were scattered, so teammates had to find and read documents by hand every time. Aiming for AX (AI transformation) that puts AI into everyday work, I first designed an in-house brain (a Gitea knowledge base) to gather team knowledge in one place, then built an MCP server that lets the team look up and update it just by chatting inside Claude. It runs on Claude Team + self-hosted Gitea with no additional SaaS.",
       roles: [
+        { status: 'done', text: 'Designed the in-house brain (Gitea knowledge base) — per-project status, domains, decisions, and logs + 7-category template, company-wide conventions' },
         { status: 'done', text: 'Solo design and implementation of the MCP server — 26 tools (read/write)' },
         { status: 'done', text: 'Single-source PERSONA.md live-loaded every session → rules update without redeploy' },
         { status: 'done', text: 'OWNERS.md permission matrix — success / requires_confirmation / denied decisions' },
@@ -131,8 +133,9 @@ export const projects: Project[] = [
         ['Clients', 'Claude Desktop, Claude Code'],
       ],
     },
-    techStack: ['Python', 'MCP (Model Context Protocol)', 'Gitea REST API', 'Claude Desktop', 'Claude Code'],
+    techStack: ['AX', 'Python', 'MCP (Model Context Protocol)', 'Gitea REST API', 'Claude Desktop', 'Claude Code'],
     gallery: [
+      { type: 'video', src: '/projects/utarex_brain/mcp_demo.mp4', alt: { ko: 'Utarex Brain MCP 시연 영상', en: 'Utarex Brain MCP Demo Video' } },
       { type: 'image', src: '/projects/utarex_brain/claude_demo.png', alt: { ko: 'Claude Code 실사용 데모', en: 'Claude Code Live Demo' } },
       { type: 'image', src: '/projects/utarex_brain/gitea_repo.png', alt: { ko: 'Gitea MCP 서버 소스 레포', en: 'Gitea MCP Server Source Repo' } },
       { type: 'image', src: '/projects/utarex_brain/persona_doc.png', alt: { ko: 'PERSONA.md 운영 매뉴얼 문서', en: 'PERSONA.md Operations Manual' } },
