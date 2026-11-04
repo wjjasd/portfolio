@@ -11,7 +11,7 @@ interface ContactFormProps {
   children: ReactNode
   /** 서버에서 렌더한 ⏺ Send(message) 로그 (aria-hidden) */
   log: Record<Result, ReactNode>
-  messages: Record<Result, string> & { submit: string; hint: string }
+  messages: Record<Result, string> & { submit: string }
 }
 
 // 개인정보는 Web3Forms로만 전송하고 저장하지 않는다
@@ -52,7 +52,6 @@ export default function ContactForm({ labelledBy, children, log, messages }: Con
         <button type="submit" className="btn" disabled={sending}>
           {messages.submit} <span aria-hidden="true">↵</span>
         </button>
-        <span className="text-[0.8125rem] text-fg-dim">{messages.hint}</span>
       </div>
       {status !== 'idle' && (
         <div className="send-log" aria-hidden="true">

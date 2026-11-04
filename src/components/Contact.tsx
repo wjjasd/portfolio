@@ -56,7 +56,6 @@ export default async function Contact() {
             success: t('form_success'),
             error: t('form_error'),
             submit: t('form_submit'),
-            hint: t('form_hint'),
           }}
           log={{
             sending: (
